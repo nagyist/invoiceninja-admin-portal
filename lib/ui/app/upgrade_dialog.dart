@@ -299,7 +299,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       'inapp_transaction_id': purchaseID,
       'key': state.account.key,
       'plan': purchaseDetails.productID.replaceAll('-', '_'),
-      'plan_paid': (int.parse(purchaseDetails.transactionDate!) / 1000).floor(),
     };
 
     await WebClient()
@@ -330,7 +329,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           handleError(purchaseDetails.error);
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             purchaseDetails.status == PurchaseStatus.restored) {
-          deliverProduct(purchaseDetails);
+          await deliverProduct(purchaseDetails);
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchaseDetails);
