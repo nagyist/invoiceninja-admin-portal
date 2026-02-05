@@ -549,6 +549,53 @@ class _UserDetailsState extends State<UserDetails>
                             updatedValues));
                     },
                   ),
+                  BoolDropdownButton(
+                    label: localization.disableRecurringPaymentNotification,
+                    helpLabel:
+                        localization.disableRecurringPaymentNotificationHelp,
+                    value: user
+                        .userCompany!.notifications[kNotificationChannelEmail]!
+                        .contains(kNotificationsDisableRecurringPayment),
+                    onChanged: (value) {
+                      final values = user.userCompany!
+                          .notifications[kNotificationChannelEmail]!;
+                      BuiltList<String> updatedValues;
+                      if (value == true) {
+                        updatedValues = values.rebuild((b) =>
+                            b..add(kNotificationsDisableRecurringPayment));
+                      } else {
+                        updatedValues = values.rebuild((b) =>
+                            b..remove(kNotificationsDisableRecurringPayment));
+                      }
+
+                      widget.viewModel.onChanged(user.rebuild((b) => b
+                        ..userCompany.notifications[kNotificationChannelEmail] =
+                            updatedValues));
+                    },
+                  ),
+                  BoolDropdownButton(
+                    label: localization.eInvoiceReceivedNotification,
+                    helpLabel: localization.eInvoiceReceivedNotificationHelp,
+                    value: user
+                        .userCompany!.notifications[kNotificationChannelEmail]!
+                        .contains(kNotificationsEInvoiceReceived),
+                    onChanged: (value) {
+                      final values = user.userCompany!
+                          .notifications[kNotificationChannelEmail]!;
+                      BuiltList<String> updatedValues;
+                      if (value == true) {
+                        updatedValues = values.rebuild(
+                            (b) => b..add(kNotificationsEInvoiceReceived));
+                      } else {
+                        updatedValues = values.rebuild(
+                            (b) => b..remove(kNotificationsEInvoiceReceived));
+                      }
+
+                      widget.viewModel.onChanged(user.rebuild((b) => b
+                        ..userCompany.notifications[kNotificationChannelEmail] =
+                            updatedValues));
+                    },
+                  ),
                 ],
               ),
               NotificationSettings(

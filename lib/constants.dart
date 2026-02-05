@@ -513,6 +513,8 @@ const String kNotificationsPurchaseOrderViewed = 'purchase_order_viewed';
 const String kNotificationsPurchaseOrderAccepted = 'purchase_order_accepted';
 const String kNotificationsInventoryThreshold = 'inventory_threshold';
 const String kNotificationsTaskAssigned = 'task_assigned';
+const String kNotificationsDisableRecurringPayment = 'disable_recurring_payment_notification';
+const String kNotificationsEInvoiceReceived = 'enable_e_invoice_received_notification';
 
 const kNotificationEvents = [
   kNotificationsInvoiceCreated,
