@@ -867,6 +867,7 @@ abstract class ActivityEntity
       kActivityVoidedPayment,
       kActivityRefundedPayment,
       kActivityViewCredit,
+      kActivityEmailCredit,
     ].contains(activityTypeId)) {
       return EntityType.credit;
     } else if ([
