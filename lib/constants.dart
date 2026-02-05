@@ -368,6 +368,7 @@ const String kQuoteStatusDraft = '1';
 const String kQuoteStatusSent = '2';
 const String kQuoteStatusApproved = '3';
 const String kQuoteStatusConverted = '4';
+const String kQuoteStatusRejected = '5';
 
 const kQuoteStatuses = {
   kQuoteStatusExpired: 'expired',
@@ -377,6 +378,7 @@ const kQuoteStatuses = {
   kQuoteStatusConverted: 'converted',
   kQuoteStatusViewed: 'viewed',
   kQuoteStatusBounced: 'bounced',
+  kQuoteStatusRejected: 'rejected',
 };
 
 const String kCreditStatusBounced = '-2';
@@ -504,6 +506,7 @@ const String kNotificationsQuoteSent = 'quote_sent';
 const String kNotificationsQuoteViewed = 'quote_viewed';
 const String kNotificationsQuoteExpired = 'quote_expired';
 const String kNotificationsQuoteApproved = 'quote_approved';
+const String kNotificationsQuoteRejected = 'quote_rejected';
 const String kNotificationsCreditCreated = 'credit_created';
 const String kNotificationsCreditSent = 'credit_sent';
 const String kNotificationsCreditViewed = 'credit_viewed';
@@ -529,6 +532,7 @@ const kNotificationEvents = [
   kNotificationsQuoteViewed,
   kNotificationsQuoteApproved,
   kNotificationsQuoteExpired,
+  kNotificationsQuoteRejected,
   kNotificationsCreditCreated,
   kNotificationsCreditSent,
   kNotificationsCreditViewed,
@@ -1161,3 +1165,8 @@ const String kActivityAccountDeleted = '150';
 const String kActivityMergedClients = '151';
 const String kActivityMergedVendors = '152';
 const String kActivityPurgedClient = '153';
+const String kActivityVerifactuInvoiceSent = '154';
+const String kActivityVerifactuInvoiceSentFailure = '155';
+const String kActivityVerifactuCancellationSent = '156';
+const String kActivityVerifactuCancellationSentFailure = '157';
+const String kActivityQuoteRejected = '158';
