@@ -1598,6 +1598,18 @@ void _showAbout(BuildContext context) async {
                         }
                       },
                     ),
+                  AppButton(
+                    label: localization.logout.toUpperCase(),
+                    iconData: Icons.logout,
+                    color: Colors.red,
+                    onPressed: () {
+                      confirmCallback(
+                          context: context,
+                          callback: (_) {
+                            store.dispatch(UserLogout());
+                          });
+                    },
+                  ),
                   SizedBox(height: 22),
                   Wrap(
                     alignment: WrapAlignment.center,
