@@ -284,6 +284,9 @@ abstract class ProductEntity extends Object
         response =
             productA!.documents.length.compareTo(productB!.documents.length);
         break;
+      case ProductFields.stockQuantity:
+        response = productA!.stockQuantity.compareTo(productB!.stockQuantity);
+        break;
       default:
         print('## ERROR: sort by product.$sortField is not implemented');
         break;
