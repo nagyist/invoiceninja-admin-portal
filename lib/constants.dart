@@ -274,6 +274,11 @@ const String kEInvoiceTypeFacturae_3_2 = 'Facturae_3.2';
 const String kEInvoiceTypeFacturae_3_2_1 = 'Facturae_3.2.1';
 const String kEInvoiceTypeFacturae_3_2_2 = 'Facturae_3.2.2';
 const String kEInvoiceTypeFACT1 = 'FACT1';
+const String kEInvoiceTypeFatturaPA = 'FatturaPA';
+const String kEInvoiceTypePEPPOL = 'PEPPOL';
+const String kEInvoiceTypeOrderX_Basic = 'OrderX_Basic';
+const String kEInvoiceTypeOrderX_Comfort = 'OrderX_Comfort';
+const String kEInvoiceTypeOrderX_Extended = 'OrderX_Extended';
 
 const kEInvoiceTypes = [
   kEInvoiceTypeEN16931,
@@ -290,6 +295,11 @@ const kEInvoiceTypes = [
   kEInvoiceTypeFacturae_3_2_1,
   kEInvoiceTypeFacturae_3_2,
   kEInvoiceTypeFACT1,
+  kEInvoiceTypeFatturaPA,
+  kEInvoiceTypePEPPOL,
+  kEInvoiceTypeOrderX_Basic,
+  kEInvoiceTypeOrderX_Comfort,
+  kEInvoiceTypeOrderX_Extended,
 ];
 
 const String kEQuoteTypeOrderX_Comfort = 'OrderX_Comfort';
@@ -516,8 +526,10 @@ const String kNotificationsPurchaseOrderViewed = 'purchase_order_viewed';
 const String kNotificationsPurchaseOrderAccepted = 'purchase_order_accepted';
 const String kNotificationsInventoryThreshold = 'inventory_threshold';
 const String kNotificationsTaskAssigned = 'task_assigned';
-const String kNotificationsDisableRecurringPayment = 'disable_recurring_payment_notification';
-const String kNotificationsEInvoiceReceived = 'enable_e_invoice_received_notification';
+const String kNotificationsDisableRecurringPayment =
+    'disable_recurring_payment_notification';
+const String kNotificationsEInvoiceReceived =
+    'enable_e_invoice_received_notification';
 
 const kNotificationEvents = [
   kNotificationsInvoiceCreated,
