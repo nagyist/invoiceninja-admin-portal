@@ -43,6 +43,9 @@ class _ReviewAppState extends State<ReviewApp> {
             children: [
               TextButton(
                 onPressed: () async {
+                  launchUrl(Uri.parse(getRateAppURL(context)));
+
+                  /*
                   // TODO remove this code: https://github.com/britannio/in_app_review/issues/56
                   if (kIsWeb || isLinux()) {
                     launchUrl(Uri.parse(getRateAppURL(context)));
@@ -53,6 +56,7 @@ class _ReviewAppState extends State<ReviewApp> {
                   } else {
                     AppReview.openStoreListing();
                   }
+                  */
 
                   if (state.showTwoYearReviewApp) {
                     store.dispatch(DismissTwoYearReviewAppPermanently());
