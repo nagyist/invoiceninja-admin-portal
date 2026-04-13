@@ -1751,6 +1751,20 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.eInvoiceForwardEmail;
+    if (value != null) {
+      result
+        ..add('e_invoice_forward_email')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.skipAutomaticEmailWithPeppol;
+    if (value != null) {
+      result
+        ..add('skip_automatic_email_with_peppol')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -2769,6 +2783,14 @@ class _$SettingsEntitySerializer
           result.sesFromAddress = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'e_invoice_forward_email':
+          result.eInvoiceForwardEmail = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'skip_automatic_email_with_peppol':
+          result.skipAutomaticEmailWithPeppol = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
       }
     }
 
@@ -3346,6 +3368,10 @@ class _$SettingsEntity extends SettingsEntity {
   final String? sesTopicArn;
   @override
   final String? sesFromAddress;
+  @override
+  final String? eInvoiceForwardEmail;
+  @override
+  final bool? skipAutomaticEmailWithPeppol;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (SettingsEntityBuilder()..update(updates))._build();
@@ -3599,7 +3625,9 @@ class _$SettingsEntity extends SettingsEntity {
       this.sesAccessKey,
       this.sesRegion,
       this.sesTopicArn,
-      this.sesFromAddress})
+      this.sesFromAddress,
+      this.eInvoiceForwardEmail,
+      this.skipAutomaticEmailWithPeppol})
       : super._();
   @override
   SettingsEntity rebuild(void Function(SettingsEntityBuilder) updates) =>
@@ -3866,7 +3894,9 @@ class _$SettingsEntity extends SettingsEntity {
         sesAccessKey == other.sesAccessKey &&
         sesRegion == other.sesRegion &&
         sesTopicArn == other.sesTopicArn &&
-        sesFromAddress == other.sesFromAddress;
+        sesFromAddress == other.sesFromAddress &&
+        eInvoiceForwardEmail == other.eInvoiceForwardEmail &&
+        skipAutomaticEmailWithPeppol == other.skipAutomaticEmailWithPeppol;
   }
 
   int? __hashCode;
@@ -4123,6 +4153,8 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, sesRegion.hashCode);
     _$hash = $jc(_$hash, sesTopicArn.hashCode);
     _$hash = $jc(_$hash, sesFromAddress.hashCode);
+    _$hash = $jc(_$hash, eInvoiceForwardEmail.hashCode);
+    _$hash = $jc(_$hash, skipAutomaticEmailWithPeppol.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -4384,7 +4416,9 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('sesAccessKey', sesAccessKey)
           ..add('sesRegion', sesRegion)
           ..add('sesTopicArn', sesTopicArn)
-          ..add('sesFromAddress', sesFromAddress))
+          ..add('sesFromAddress', sesFromAddress)
+          ..add('eInvoiceForwardEmail', eInvoiceForwardEmail)
+          ..add('skipAutomaticEmailWithPeppol', skipAutomaticEmailWithPeppol))
         .toString();
   }
 }
@@ -5620,6 +5654,17 @@ class SettingsEntityBuilder
   set sesFromAddress(String? sesFromAddress) =>
       _$this._sesFromAddress = sesFromAddress;
 
+  String? _eInvoiceForwardEmail;
+  String? get eInvoiceForwardEmail => _$this._eInvoiceForwardEmail;
+  set eInvoiceForwardEmail(String? eInvoiceForwardEmail) =>
+      _$this._eInvoiceForwardEmail = eInvoiceForwardEmail;
+
+  bool? _skipAutomaticEmailWithPeppol;
+  bool? get skipAutomaticEmailWithPeppol =>
+      _$this._skipAutomaticEmailWithPeppol;
+  set skipAutomaticEmailWithPeppol(bool? skipAutomaticEmailWithPeppol) =>
+      _$this._skipAutomaticEmailWithPeppol = skipAutomaticEmailWithPeppol;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5874,6 +5919,8 @@ class SettingsEntityBuilder
       _sesRegion = $v.sesRegion;
       _sesTopicArn = $v.sesTopicArn;
       _sesFromAddress = $v.sesFromAddress;
+      _eInvoiceForwardEmail = $v.eInvoiceForwardEmail;
+      _skipAutomaticEmailWithPeppol = $v.skipAutomaticEmailWithPeppol;
       _$v = null;
     }
     return this;
@@ -6148,6 +6195,8 @@ class SettingsEntityBuilder
             sesRegion: sesRegion,
             sesTopicArn: sesTopicArn,
             sesFromAddress: sesFromAddress,
+            eInvoiceForwardEmail: eInvoiceForwardEmail,
+            skipAutomaticEmailWithPeppol: skipAutomaticEmailWithPeppol,
           );
     } catch (_) {
       late String _$failedField;

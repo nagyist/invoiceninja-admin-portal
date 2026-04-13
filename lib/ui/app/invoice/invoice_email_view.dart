@@ -205,6 +205,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                   child: Text(localization.to +
                       ': ' +
                       contacts.nonNulls
+                          .where((contact) => invoice.isPurchaseOrder
+                              ? !(contact as VendorContactEntity).ccOnly
+                              : !(contact as ClientContactEntity).ccOnly)
                           .map((contact) => invoice.isPurchaseOrder
                               ? (contact as VendorContactEntity).fullNameOrEmail
                               : (contact as ClientContactEntity)
@@ -285,7 +288,17 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                 padding: const EdgeInsets.only(left: 24, right: 10),
                 child: DecoratedFormField(
                   controller: _ccEmailController,
-                  label: localization.ccEmail,
+                  label: localization.ccEmail +
+                      ': ' +
+                      contacts.nonNulls
+                          .where((contact) => invoice.isPurchaseOrder
+                              ? (contact as VendorContactEntity).ccOnly
+                              : (contact as ClientContactEntity).ccOnly)
+                          .map((contact) => invoice.isPurchaseOrder
+                              ? (contact as VendorContactEntity).fullNameOrEmail
+                              : (contact as ClientContactEntity)
+                                  .fullNameWithEmail)
+                          .join(', '),
                   keyboardType: TextInputType.emailAddress,
                 )),
           )

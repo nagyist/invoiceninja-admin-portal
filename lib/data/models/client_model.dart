@@ -865,6 +865,7 @@ abstract class ClientContactEntity extends Object
       assignedUserId: '',
       createdUserId: '',
       link: '',
+      ccOnly: false,
     );
   }
 
@@ -911,6 +912,9 @@ abstract class ClientContactEntity extends Object
   int get lastLogin;
 
   String get link;
+
+  @BuiltValueField(wireName: 'cc_only')
+  bool get ccOnly;
 
   String get silentLink => '$link?silent=true';
 
@@ -987,6 +991,10 @@ abstract class ClientContactEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+  // ignore: unused_element
+  static void _initializeBuilder(ClientContactEntityBuilder builder) => builder
+    ..ccOnly = false;
 
   static Serializer<ClientContactEntity> get serializer =>
       _$clientContactEntitySerializer;

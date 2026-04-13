@@ -625,6 +625,8 @@ class _$ClientContactEntitySerializer
           specifiedType: const FullType(int)),
       'link',
       serializers.serialize(object.link, specifiedType: const FullType(String)),
+      'cc_only',
+      serializers.serialize(object.ccOnly, specifiedType: const FullType(bool)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -736,6 +738,10 @@ class _$ClientContactEntitySerializer
         case 'link':
           result.link = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
+          break;
+        case 'cc_only':
+          result.ccOnly = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -2039,6 +2045,8 @@ class _$ClientContactEntity extends ClientContactEntity {
   @override
   final String link;
   @override
+  final bool ccOnly;
+  @override
   final bool? isChanged;
   @override
   final int createdAt;
@@ -2074,6 +2082,7 @@ class _$ClientContactEntity extends ClientContactEntity {
       required this.customValue4,
       required this.lastLogin,
       required this.link,
+      required this.ccOnly,
       this.isChanged,
       required this.createdAt,
       required this.updatedAt,
@@ -2110,6 +2119,7 @@ class _$ClientContactEntity extends ClientContactEntity {
         customValue4 == other.customValue4 &&
         lastLogin == other.lastLogin &&
         link == other.link &&
+        ccOnly == other.ccOnly &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -2139,6 +2149,7 @@ class _$ClientContactEntity extends ClientContactEntity {
     _$hash = $jc(_$hash, customValue4.hashCode);
     _$hash = $jc(_$hash, lastLogin.hashCode);
     _$hash = $jc(_$hash, link.hashCode);
+    _$hash = $jc(_$hash, ccOnly.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -2168,6 +2179,7 @@ class _$ClientContactEntity extends ClientContactEntity {
           ..add('customValue4', customValue4)
           ..add('lastLogin', lastLogin)
           ..add('link', link)
+          ..add('ccOnly', ccOnly)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -2240,6 +2252,10 @@ class ClientContactEntityBuilder
   String? get link => _$this._link;
   set link(String? link) => _$this._link = link;
 
+  bool? _ccOnly;
+  bool? get ccOnly => _$this._ccOnly;
+  set ccOnly(bool? ccOnly) => _$this._ccOnly = ccOnly;
+
   bool? _isChanged;
   bool? get isChanged => _$this._isChanged;
   set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
@@ -2274,7 +2290,9 @@ class ClientContactEntityBuilder
   String? get id => _$this._id;
   set id(String? id) => _$this._id = id;
 
-  ClientContactEntityBuilder();
+  ClientContactEntityBuilder() {
+    ClientContactEntity._initializeBuilder(this);
+  }
 
   ClientContactEntityBuilder get _$this {
     final $v = _$v;
@@ -2293,6 +2311,7 @@ class ClientContactEntityBuilder
       _customValue4 = $v.customValue4;
       _lastLogin = $v.lastLogin;
       _link = $v.link;
+      _ccOnly = $v.ccOnly;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -2350,6 +2369,8 @@ class ClientContactEntityBuilder
               lastLogin, r'ClientContactEntity', 'lastLogin'),
           link: BuiltValueNullFieldError.checkNotNull(
               link, r'ClientContactEntity', 'link'),
+          ccOnly: BuiltValueNullFieldError.checkNotNull(
+              ccOnly, r'ClientContactEntity', 'ccOnly'),
           isChanged: isChanged,
           createdAt: BuiltValueNullFieldError.checkNotNull(
               createdAt, r'ClientContactEntity', 'createdAt'),
