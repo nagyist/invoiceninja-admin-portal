@@ -149,6 +149,15 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                     settings.rebuild((b) => b..mergeEInvoiceToPdf = value),
                   ),
                 ),
+                BoolDropdownButton(
+                  label: localization.skipAutomaticEmails,
+                  value: settings.skipAutomaticEmailWithPeppol,
+                  iconData: MdiIcons.email,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild(
+                        (b) => b..skipAutomaticEmailWithPeppol = value),
+                  ),
+                ),
                 Padding(
                   padding:
                       EdgeInsets.only(top: settingsUIState.isFiltered ? 0 : 12),
