@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ReviewApp extends StatefulWidget {
