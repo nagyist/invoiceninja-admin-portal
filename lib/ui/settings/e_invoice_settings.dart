@@ -30,11 +30,12 @@ class EInvoiceSettings extends StatefulWidget {
 
 class _EInvoiceSettingsState extends State<EInvoiceSettings> {
   static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_emailSettings');
+      GlobalKey<FormState>(debugLabel: '_eInvoiceSettings');
 
   FocusScopeNode? _focusNode;
 
   final _eInvoiceCertificatePassphraseController = TextEditingController();
+  final _eInvoiceForwardEmailController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -59,6 +60,7 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
   void didChangeDependencies() {
     _controllers = [
       _eInvoiceCertificatePassphraseController,
+      _eInvoiceForwardEmailController,
     ];
 
     _controllers
@@ -66,9 +68,11 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
 
     final viewModel = widget.viewModel;
     final company = viewModel.company;
+    final settings = viewModel.settings;
 
     _eInvoiceCertificatePassphraseController.text =
         company.eInvoiceCertificatePassphrase;
+    _eInvoiceForwardEmailController.text = settings.eInvoiceForwardEmail ?? '';
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -83,14 +87,11 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
     final viewModel = widget.viewModel;
     final isFiltered = viewModel.state.settingsUIState.isFiltered;
 
-    /*8
-    final settings = viewModel.settings.rebuild((b) => b
-      ..customSendingEmail =
-          isFiltered && customSendingEmail.isEmpty ? null : customSendingEmail);
+    final settings = viewModel.settings.rebuild((b) =>
+        b..eInvoiceForwardEmail = _eInvoiceForwardEmailController.text.trim());
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
     }
-    */
 
     final company = viewModel.company.rebuild((b) => b
       ..eInvoiceCertificatePassphrase =
@@ -122,7 +123,7 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
     final settingsUIState = state.settingsUIState;
 
     return EditScaffold(
-      title: localization.emailSettings,
+      title: localization.eInvoiceSettings,
       onSavePressed: _onSavePressed,
       body: AppForm(
         formKey: _formKey,
@@ -283,7 +284,13 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                         ]),
                       )
                     ],
-                  )
+                  ),
+                  DecoratedFormField(
+                    label: localization.forwardEmail,
+                    controller: _eInvoiceForwardEmailController,
+                    keyboardType: TextInputType.emailAddress,
+                    onSavePressed: _onSavePressed,
+                  ),
                 ],
               ],
             ],
