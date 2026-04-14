@@ -127,7 +127,7 @@ abstract class ClientEntity extends Object
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       settings: SettingsEntity().rebuild((b) => b
-        ..languageId = state?.company.languageId ?? ''
+        //..languageId = state?.company.languageId ?? ''
         ..currencyId = state?.company.currencyId ?? ''),
       name: '',
       displayName: '',
@@ -787,7 +787,7 @@ abstract class ClientEntity extends Object
   bool get hasCurrency =>
       settings.currencyId != null && settings.currencyId!.isNotEmpty;
 
-  String get languageId => settings.languageId ?? kLanguageEnglish;
+  String get languageId => settings.languageId ?? '';
 
   ClientContactEntity getContact(String? contactId) =>
       contacts.firstWhere((contact) => contact.id == contactId,
