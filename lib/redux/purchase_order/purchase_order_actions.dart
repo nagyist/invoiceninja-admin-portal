@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
@@ -633,7 +634,15 @@ void handlePurchaseOrderAction(BuildContext? context,
       final http.Response? response =
           await WebClient().get(url, state.token, rawResponse: true);
       store.dispatch(StopSaving());
-      await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
+      try {
+        await Printing.layoutPdf(
+            onLayout: (_) => response!.bodyBytes,
+            dynamicLayout: false);
+      } catch (error) {
+        showDialog<void>(
+            context: navigatorKey.currentContext!,
+            builder: (context) => ErrorDialog(error));
+      }
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
@@ -645,7 +654,15 @@ void handlePurchaseOrderAction(BuildContext? context,
       final http.Response? response = await WebClient()
           .post(url, state.credentials.token, data: data, rawResponse: true);
       store.dispatch(StopSaving());
-      await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
+      try {
+        await Printing.layoutPdf(
+            onLayout: (_) => response!.bodyBytes,
+            dynamicLayout: false);
+      } catch (error) {
+        showDialog<void>(
+            context: navigatorKey.currentContext!,
+            builder: (context) => ErrorDialog(error));
+      }
       break;
     case EntityAction.addToInventory:
       store.dispatch(AddPurchaseOrdersToInventoryRequest(
