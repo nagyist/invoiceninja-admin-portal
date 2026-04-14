@@ -112,8 +112,7 @@ class ReportsScreen extends StatelessWidget {
       kReportDocument,
       if (state.company.isModuleEnabled(EntityType.expense)) ...[
         kReportExpense,
-        if (state.company.hasExpenseTaxes)
-          kReportExpenseTax,
+        if (state.company.hasExpenseTaxes) kReportExpenseTax,
         if (state.company.isModuleEnabled(EntityType.recurringExpense))
           kReportRecurringExpense,
       ],
@@ -1614,8 +1613,8 @@ class ReportResult {
               '';
       final countValue = values['count']!.toInt().toString();
       final cells = <mt.DataCell>[
-        mt.DataCell(CopyToClipboard(
-            value: currencyName, child: Text(currencyName))),
+        mt.DataCell(
+            CopyToClipboard(value: currencyName, child: Text(currencyName))),
         mt.DataCell(
             CopyToClipboard(value: countValue, child: Text(countValue))),
       ];
@@ -1636,8 +1635,8 @@ class ReportResult {
                     ? FormatNumberType.double
                     : FormatNumberType.money);
           }
-          cells.add(mt.DataCell(
-              CopyToClipboard(value: value!, child: Text(value!))));
+          cells.add(
+              mt.DataCell(CopyToClipboard(value: value!, child: Text(value))));
         }
       });
 
