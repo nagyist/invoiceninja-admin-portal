@@ -722,8 +722,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       store.dispatch(StopSaving());
       try {
         await Printing.layoutPdf(
-            onLayout: (_) => response!.bodyBytes,
-            dynamicLayout: false);
+            onLayout: (_) => response!.bodyBytes, dynamicLayout: false);
       } catch (error) {
         showDialog<void>(
             context: navigatorKey.currentContext!,
@@ -740,8 +739,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       store.dispatch(StopSaving());
       try {
         await Printing.layoutPdf(
-            onLayout: (_) => response!.bodyBytes,
-            dynamicLayout: false);
+            onLayout: (_) => response!.bodyBytes, dynamicLayout: false);
       } catch (error) {
         showDialog<void>(
             context: navigatorKey.currentContext!,

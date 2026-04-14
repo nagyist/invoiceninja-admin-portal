@@ -109,9 +109,8 @@ void saveDownloadedFile(
   if (prefix != null) {
     final localization = AppLocalization.of(navigatorKey.currentContext!)!;
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
-    final effectiveLanguageId = languageId.isNotEmpty
-        ? languageId
-        : store.state.company.languageId;
+    final effectiveLanguageId =
+        languageId.isNotEmpty ? languageId : store.state.company.languageId;
     final localeCode =
         store.state.staticState.languageMap[effectiveLanguageId]!.locale;
 

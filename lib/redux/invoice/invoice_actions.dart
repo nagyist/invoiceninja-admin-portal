@@ -864,8 +864,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
       store.dispatch(StopSaving());
       try {
         await Printing.layoutPdf(
-            onLayout: (_) => response!.bodyBytes,
-            dynamicLayout: false);
+            onLayout: (_) => response!.bodyBytes, dynamicLayout: false);
       } catch (error) {
         showDialog<void>(
             context: navigatorKey.currentContext!,
@@ -882,8 +881,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
       store.dispatch(StopSaving());
       try {
         await Printing.layoutPdf(
-            onLayout: (_) => response!.bodyBytes,
-            dynamicLayout: false);
+            onLayout: (_) => response!.bodyBytes, dynamicLayout: false);
       } catch (error) {
         showDialog<void>(
             context: navigatorKey.currentContext!,

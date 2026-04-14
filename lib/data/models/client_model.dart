@@ -993,8 +993,8 @@ abstract class ClientContactEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   // ignore: unused_element
-  static void _initializeBuilder(ClientContactEntityBuilder builder) => builder
-    ..ccOnly = false;
+  static void _initializeBuilder(ClientContactEntityBuilder builder) =>
+      builder..ccOnly = false;
 
   static Serializer<ClientContactEntity> get serializer =>
       _$clientContactEntitySerializer;

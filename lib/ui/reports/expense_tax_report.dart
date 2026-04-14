@@ -51,10 +51,9 @@ ReportResult expenseTaxReport(
   BuiltList<ExpenseTaxReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final expenseTaxReportSettings =
-      reportSettings.containsKey(kReportExpenseTax)
-          ? reportSettings[kReportExpenseTax]!
-          : ReportSettingsEntity();
+  final expenseTaxReportSettings = reportSettings.containsKey(kReportExpenseTax)
+      ? reportSettings[kReportExpenseTax]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     ExpenseTaxReportFields.tax_name,
@@ -188,9 +187,8 @@ ReportResult expenseTaxReport(
       rowA, rowB, expenseTaxReportSettings, selectedColumns)!);
 
   return ReportResult(
-    allColumns: ExpenseTaxReportFields.values
-        .map((e) => EnumUtils.parse(e))
-        .toList(),
+    allColumns:
+        ExpenseTaxReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: columns.map((item) => EnumUtils.parse(item)).toList(),
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
