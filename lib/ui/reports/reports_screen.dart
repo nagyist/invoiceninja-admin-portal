@@ -111,6 +111,8 @@ class ReportsScreen extends StatelessWidget {
       kReportDocument,
       if (state.company.isModuleEnabled(EntityType.expense)) ...[
         kReportExpense,
+        if (state.company.hasExpenseTaxes)
+          kReportExpenseTax,
         if (state.company.isModuleEnabled(EntityType.recurringExpense))
           kReportRecurringExpense,
       ],

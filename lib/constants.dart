@@ -724,6 +724,7 @@ const String kReportCredit = 'credit';
 const String kReportCreditItem = 'credit_item';
 const String kReportDocument = 'document';
 const String kReportExpense = 'expense';
+const String kReportExpenseTax = 'expense_tax';
 const String kReportInvoice = 'invoice';
 const String kReportPayment = 'payment';
 const String kReportProduct = 'product';
@@ -755,6 +756,7 @@ final kReportMap = {
   kReportProfitAndLoss: ExportType.profitloss,
   kReportTask: ExportType.tasks,
   kReportTaskItem: null,
+  kReportExpenseTax: null,
   kReportInvoiceTax: ExportType.tax_summary,
   kReportPaymentTax: null,
   kReportQuote: ExportType.quotes,
