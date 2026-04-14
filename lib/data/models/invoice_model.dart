@@ -1593,6 +1593,7 @@ class ProductItemFields {
   static const String custom2 = 'product2';
   static const String custom3 = 'product3';
   static const String custom4 = 'product4';
+  static const String netCost = 'net_cost';
   /*
   static const String custom1 = 'custom1';
   static const String custom2 = 'custom2';
