@@ -313,7 +313,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 ),
               ],
               onChanged: (dynamic value) {
-                if (value == 'logout' && !state.isLoading && !state.isSaving) {
+                if (value == 'logout') {
                   widget.viewModel.onLogoutTap(context);
                 } else if (state.isLoading) {
                   showMessageDialog(message: localization.waitForLoading);
