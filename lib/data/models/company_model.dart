@@ -132,6 +132,7 @@ abstract class CompanyEntity extends Object
       hasEInvoiceCertificate: false,
       hasEInvoiceCertificatePassphrase: false,
       eInvoiceCertificatePassphrase: '',
+      legalEntityId: '',
       smtpHost: '',
       smtpPort: 587,
       smtpEncryption: SMTP_ENCRYPTION_TLS,
@@ -518,6 +519,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'e_invoice_certificate_passphrase')
   String get eInvoiceCertificatePassphrase;
 
+  @BuiltValueField(wireName: 'legal_entity_id')
+  String get legalEntityId;
+
   //@BuiltValueField(wireName: 'e_invoice')
   //BuiltMap<String, dynamic> get eInvoice;
 
@@ -848,6 +852,7 @@ abstract class CompanyEntity extends Object
     ..hasEInvoiceCertificate = false
     ..hasEInvoiceCertificatePassphrase = false
     ..eInvoiceCertificatePassphrase = ''
+    ..legalEntityId = ''
     ..enableCustomSurchargeTaxes1 = false
     ..enableCustomSurchargeTaxes2 = false
     ..enableCustomSurchargeTaxes3 = false
