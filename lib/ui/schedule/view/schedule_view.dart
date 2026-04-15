@@ -102,6 +102,50 @@ class _ScheduleViewState extends State<ScheduleView> {
                   localization.lookup(schedule.parameters.reportName),
               localization.dateRange: localization.lookup(parameters.dateRange),
             })
+          else if (schedule.template ==
+              ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS)
+            FieldGrid({
+              localization.frequency:
+                  localization.lookup(kFrequencies[schedule.frequencyId]),
+              localization.remainingCycles: schedule.remainingCycles == -1
+                  ? localization.endless
+                  : '${schedule.remainingCycles}',
+              localization.clients: parameters.clients!.isEmpty
+                  ? localization.allClients
+                  : parameters.clients!.length == 1
+                      ? state.clientState
+                          .get(parameters.clients!.first)
+                          .displayName
+                      : '${parameters.clients!.length} ${localization.clients}',
+              localization.dateRange: localization.lookup(parameters.dateRange),
+              localization.autoSend:
+                  parameters.autoSend == true
+                      ? localization.yes
+                      : localization.no,
+              localization.includeProjectTasks:
+                  parameters.includeProjectTasks == true
+                      ? localization.yes
+                      : localization.no,
+            })
+          else if (schedule.template ==
+              ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE)
+            FieldGrid({
+              localization.frequency:
+                  localization.lookup(kFrequencies[schedule.frequencyId]),
+              localization.remainingCycles: schedule.remainingCycles == -1
+                  ? localization.endless
+                  : '${schedule.remainingCycles}',
+              localization.invoice: parameters.invoiceId != null &&
+                      parameters.invoiceId!.isNotEmpty
+                  ? state.invoiceState
+                      .get(parameters.invoiceId!)
+                      .listDisplayName
+                  : '',
+              localization.autoBill:
+                  parameters.autoBill == true
+                      ? localization.yes
+                      : localization.no,
+            })
         ],
       ),
     );

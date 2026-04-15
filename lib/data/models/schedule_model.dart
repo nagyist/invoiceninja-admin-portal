@@ -82,11 +82,16 @@ abstract class ScheduleEntity extends Object
   static const TEMPLATE_EMAIL_STATEMENT = 'email_statement';
   static const TEMPLATE_EMAIL_RECORD = 'email_record';
   static const TEMPLATE_EMAIL_REPORT = 'email_report';
+  static const TEMPLATE_INVOICE_OUTSTANDING_TASKS =
+      'invoice_outstanding_tasks';
+  static const TEMPLATE_PAYMENT_SCHEDULE = 'payment_schedule';
 
   static const TEMPLATES = [
     TEMPLATE_EMAIL_STATEMENT,
     TEMPLATE_EMAIL_REPORT,
     TEMPLATE_EMAIL_RECORD,
+    TEMPLATE_INVOICE_OUTSTANDING_TASKS,
+    TEMPLATE_PAYMENT_SCHEDULE,
   ];
 
   @override
@@ -198,10 +203,12 @@ abstract class ScheduleParameters
     implements Built<ScheduleParameters, ScheduleParametersBuilder> {
   factory ScheduleParameters(String action) {
     return _$ScheduleParameters._(
-      clients: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
+      clients: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ||
+              action == ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS
           ? BuiltList<String>()
           : null,
-      dateRange: action == ScheduleEntity.TEMPLATE_EMAIL_RECORD
+      dateRange: action == ScheduleEntity.TEMPLATE_EMAIL_RECORD ||
+              action == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE
           ? null
           : DateRange.thisQuarter.snakeCase,
       showAgingTable:
@@ -222,6 +229,18 @@ abstract class ScheduleParameters
       reportName: action == ScheduleEntity.TEMPLATE_EMAIL_REPORT
           ? ExportType.invoices.name
           : null,
+      autoSend:
+          action == ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS
+              ? false
+              : null,
+      includeProjectTasks:
+          action == ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS
+              ? false
+              : null,
+      invoiceId:
+          action == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE ? '' : null,
+      autoBill:
+          action == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE ? false : null,
     );
   }
 
@@ -260,6 +279,18 @@ abstract class ScheduleParameters
 
   @BuiltValueField(wireName: 'report_name')
   String? get reportName;
+
+  @BuiltValueField(wireName: 'auto_send')
+  bool? get autoSend;
+
+  @BuiltValueField(wireName: 'include_project_tasks')
+  bool? get includeProjectTasks;
+
+  @BuiltValueField(wireName: 'invoice_id')
+  String? get invoiceId;
+
+  @BuiltValueField(wireName: 'auto_bill')
+  bool? get autoBill;
 
   static Serializer<ScheduleParameters> get serializer =>
       _$scheduleParametersSerializer;
