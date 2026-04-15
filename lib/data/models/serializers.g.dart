@@ -64,8 +64,20 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(DocumentListResponse.serializer)
       ..add(DocumentState.serializer)
       ..add(DocumentUIState.serializer)
+      ..add(EInvoiceBillingReferenceEntity.serializer)
+      ..add(EInvoiceCreditNoteEntity.serializer)
+      ..add(EInvoiceDeliveryEntity.serializer)
+      ..add(EInvoiceDocumentReferenceEntity.serializer)
       ..add(EInvoiceElementEntity.serializer)
+      ..add(EInvoiceEntity.serializer)
       ..add(EInvoiceFieldEntity.serializer)
+      ..add(EInvoiceFinancialInstitutionBranchEntity.serializer)
+      ..add(EInvoiceFinancialInstitutionEntity.serializer)
+      ..add(EInvoiceInvoiceEntity.serializer)
+      ..add(EInvoiceInvoicePeriodEntity.serializer)
+      ..add(EInvoicePayeeFinancialAccountEntity.serializer)
+      ..add(EInvoicePaymentMeansEntity.serializer)
+      ..add(EInvoiceValueEntity.serializer)
       ..add(EmailTemplate.serializer)
       ..add(EntityState.serializer)
       ..add(EntityType.serializer)
@@ -362,6 +374,22 @@ Serializers _$serializers = (Serializers().toBuilder()
           const FullType(
               BuiltList, const [const FullType(ExpenseScheduleEntity)]),
           () => ListBuilder<ExpenseScheduleEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList,
+              const [const FullType(EInvoiceBillingReferenceEntity)]),
+          () => ListBuilder<EInvoiceBillingReferenceEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(EInvoiceInvoicePeriodEntity)]),
+          () => ListBuilder<EInvoiceInvoicePeriodEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(EInvoiceDeliveryEntity)]),
+          () => ListBuilder<EInvoiceDeliveryEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(EInvoicePaymentMeansEntity)]),
+          () => ListBuilder<EInvoicePaymentMeansEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(EntityState)]),
           () => ListBuilder<EntityState>())

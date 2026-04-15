@@ -179,6 +179,18 @@ part 'serializers.g.dart';
   PdfPreviewRequest,
   TaxDataEntity,
   EInvoiceFieldEntity,
+  EInvoiceEntity,
+  EInvoiceInvoiceEntity,
+  EInvoiceInvoicePeriodEntity,
+  EInvoiceDeliveryEntity,
+  EInvoicePaymentMeansEntity,
+  EInvoiceValueEntity,
+  EInvoicePayeeFinancialAccountEntity,
+  EInvoiceFinancialInstitutionBranchEntity,
+  EInvoiceFinancialInstitutionEntity,
+  EInvoiceCreditNoteEntity,
+  EInvoiceBillingReferenceEntity,
+  EInvoiceDocumentReferenceEntity,
   HealthCheckLastErrorResponse,
 ])
 final Serializers serializers =

@@ -285,6 +285,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'tax_info',
       serializers.serialize(object.taxData,
           specifiedType: const FullType(TaxDataEntity)),
+      'e_invoice',
+      serializers.serialize(object.eInvoice,
+          specifiedType: const FullType(EInvoiceEntity)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -714,6 +717,11 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'location_id':
           result.locationId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'e_invoice':
+          result.eInvoice.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(EInvoiceEntity))!
+              as EInvoiceEntity);
           break;
         case 'loadedAt':
           result.loadedAt = serializers.deserialize(value,
@@ -1593,6 +1601,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String? locationId;
   @override
+  final EInvoiceEntity eInvoice;
+  @override
   final int? loadedAt;
   @override
   final bool? isChanged;
@@ -1684,6 +1694,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       required this.saveDefaultFooter,
       required this.taxData,
       this.locationId,
+      required this.eInvoice,
       this.loadedAt,
       this.isChanged,
       required this.createdAt,
@@ -1772,6 +1783,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         saveDefaultFooter == other.saveDefaultFooter &&
         taxData == other.taxData &&
         locationId == other.locationId &&
+        eInvoice == other.eInvoice &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1854,6 +1866,7 @@ class _$InvoiceEntity extends InvoiceEntity {
     _$hash = $jc(_$hash, saveDefaultFooter.hashCode);
     _$hash = $jc(_$hash, taxData.hashCode);
     _$hash = $jc(_$hash, locationId.hashCode);
+    _$hash = $jc(_$hash, eInvoice.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -1937,6 +1950,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('saveDefaultFooter', saveDefaultFooter)
           ..add('taxData', taxData)
           ..add('locationId', locationId)
+          ..add('eInvoice', eInvoice)
           ..add('loadedAt', loadedAt)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -2252,6 +2266,11 @@ class InvoiceEntityBuilder
   String? get locationId => _$this._locationId;
   set locationId(String? locationId) => _$this._locationId = locationId;
 
+  EInvoiceEntityBuilder? _eInvoice;
+  EInvoiceEntityBuilder get eInvoice =>
+      _$this._eInvoice ??= EInvoiceEntityBuilder();
+  set eInvoice(EInvoiceEntityBuilder? eInvoice) => _$this._eInvoice = eInvoice;
+
   int? _loadedAt;
   int? get loadedAt => _$this._loadedAt;
   set loadedAt(int? loadedAt) => _$this._loadedAt = loadedAt;
@@ -2368,6 +2387,7 @@ class InvoiceEntityBuilder
       _saveDefaultFooter = $v.saveDefaultFooter;
       _taxData = $v.taxData.toBuilder();
       _locationId = $v.locationId;
+      _eInvoice = $v.eInvoice.toBuilder();
       _loadedAt = $v.loadedAt;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -2517,6 +2537,7 @@ class InvoiceEntityBuilder
                 saveDefaultFooter, r'InvoiceEntity', 'saveDefaultFooter'),
             taxData: taxData.build(),
             locationId: locationId,
+            eInvoice: eInvoice.build(),
             loadedAt: loadedAt,
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
@@ -2548,6 +2569,9 @@ class InvoiceEntityBuilder
 
         _$failedField = 'taxData';
         taxData.build();
+
+        _$failedField = 'eInvoice';
+        eInvoice.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
             r'InvoiceEntity', _$failedField, e.toString());

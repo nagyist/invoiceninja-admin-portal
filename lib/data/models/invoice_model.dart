@@ -9,6 +9,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/mixins/invoice_mixin.dart';
+import 'package:invoiceninja_flutter/data/models/e_invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
@@ -264,7 +265,7 @@ abstract class InvoiceEntity extends Object
       saveDefaultTerms: false,
       saveDefaultFooter: false,
       taxData: TaxDataEntity(),
-      //eInvoice: BuiltMap<String, dynamic>(),
+      eInvoice: EInvoiceEntity(),
       locationId: '',
     );
   }
@@ -606,8 +607,8 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'location_id')
   String? get locationId;
 
-  //@BuiltValueField(wireName: 'e_invoice')
-  //BuiltMap<String, dynamic> get eInvoice;
+  @BuiltValueField(wireName: 'e_invoice')
+  EInvoiceEntity get eInvoice;
 
   bool get isApproved {
     if (isQuote &&
@@ -1595,7 +1596,7 @@ abstract class InvoiceEntity extends Object
     ..autoBillEnabled = false
     ..nextSendDatetime = ''
     ..taxData.replace(TaxDataEntity())
-    //..eInvoice.replace(BuiltMap<String, dynamic>())
+    ..eInvoice.replace(EInvoiceEntity())
     ..subscriptionId = ''
     ..locationId = '';
 
