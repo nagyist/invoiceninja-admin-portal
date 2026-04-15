@@ -334,9 +334,7 @@ class _EntityListState extends State<EntityList> {
             [])
         .nonNulls;
 
-    return RefreshIndicator(
-        onRefresh: () => widget.onRefreshed(context),
-        child: Column(
+    final column = Column(
           children: [
             AnimatedContainer(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -492,6 +490,15 @@ class _EntityListState extends State<EntityList> {
               ),
             ),
           ],
-        ));
+        );
+
+    if (isList) {
+      return RefreshIndicator(
+        onRefresh: () => widget.onRefreshed(context),
+        child: column,
+      );
+    } else {
+      return column;
+    }
   }
 }
