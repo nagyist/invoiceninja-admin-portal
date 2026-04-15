@@ -9,6 +9,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/mixins/invoice_mixin.dart';
+import 'package:invoiceninja_flutter/data/models/e_invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
@@ -177,24 +178,36 @@ abstract class InvoiceEntity extends Object
       terms: '',
       footer: '',
       designId: '',
-      taxName1: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
-          ? settings.defaultTaxName1 ?? ''
-          : '',
-      taxRate1: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
-          ? settings.defaultTaxRate1 ?? 0.0
-          : 0,
-      taxName2: (company?.numberOfInvoiceTaxRates ?? 0) >= 2
-          ? settings.defaultTaxName2 ?? ''
-          : '',
-      taxRate2: (company?.numberOfInvoiceTaxRates ?? 0) >= 2
-          ? settings.defaultTaxRate2 ?? 0.0
-          : 0,
-      taxName3: (company?.numberOfInvoiceTaxRates ?? 0) >= 3
-          ? settings.defaultTaxName3 ?? ''
-          : '',
-      taxRate3: (company?.numberOfInvoiceTaxRates ?? 0) >= 3
-          ? settings.defaultTaxRate3 ?? 0.0
-          : 0,
+      taxName1: client?.isTaxExempt == true
+          ? ''
+          : (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+              ? settings.defaultTaxName1 ?? ''
+              : '',
+      taxRate1: client?.isTaxExempt == true
+          ? 0
+          : (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+              ? settings.defaultTaxRate1 ?? 0.0
+              : 0,
+      taxName2: client?.isTaxExempt == true
+          ? ''
+          : (company?.numberOfInvoiceTaxRates ?? 0) >= 2
+              ? settings.defaultTaxName2 ?? ''
+              : '',
+      taxRate2: client?.isTaxExempt == true
+          ? 0
+          : (company?.numberOfInvoiceTaxRates ?? 0) >= 2
+              ? settings.defaultTaxRate2 ?? 0.0
+              : 0,
+      taxName3: client?.isTaxExempt == true
+          ? ''
+          : (company?.numberOfInvoiceTaxRates ?? 0) >= 3
+              ? settings.defaultTaxName3 ?? ''
+              : '',
+      taxRate3: client?.isTaxExempt == true
+          ? 0
+          : (company?.numberOfInvoiceTaxRates ?? 0) >= 3
+              ? settings.defaultTaxRate3 ?? 0.0
+              : 0,
       isAmountDiscount: false,
       partial: 0.0,
       partialDueDate: '',
@@ -252,7 +265,7 @@ abstract class InvoiceEntity extends Object
       saveDefaultTerms: false,
       saveDefaultFooter: false,
       taxData: TaxDataEntity(),
-      //eInvoice: BuiltMap<String, dynamic>(),
+      eInvoice: EInvoiceEntity(),
       locationId: '',
     );
   }
@@ -343,30 +356,42 @@ abstract class InvoiceEntity extends Object
     return rebuild((b) => b
       ..locationId = ''
       ..exchangeRate = exchangeRate
-      ..taxName1 = state.company.numberOfInvoiceTaxRates >= 1 &&
-              (settings.defaultTaxName1 ?? '').isNotEmpty
-          ? settings.defaultTaxName1
-          : taxName1
-      ..taxRate1 = state.company.numberOfInvoiceTaxRates >= 1 &&
-              (settings.defaultTaxName1 ?? '').isNotEmpty
-          ? settings.defaultTaxRate1
-          : taxRate1
-      ..taxName2 = state.company.numberOfInvoiceTaxRates >= 2 &&
-              (settings.defaultTaxName2 ?? '').isNotEmpty
-          ? settings.defaultTaxName2
-          : taxName2
-      ..taxRate2 = state.company.numberOfInvoiceTaxRates >= 2 &&
-              (settings.defaultTaxName2 ?? '').isNotEmpty
-          ? settings.defaultTaxRate2
-          : taxRate2
-      ..taxName3 = state.company.numberOfInvoiceTaxRates >= 3 &&
-              (settings.defaultTaxName3 ?? '').isNotEmpty
-          ? settings.defaultTaxName3
-          : taxName3
-      ..taxRate3 = state.company.numberOfInvoiceTaxRates >= 3 &&
-              (settings.defaultTaxName3 ?? '').isNotEmpty
-          ? settings.defaultTaxRate3
-          : taxRate3);
+      ..taxName1 = client.isTaxExempt
+          ? ''
+          : state.company.numberOfInvoiceTaxRates >= 1 &&
+                  (settings.defaultTaxName1 ?? '').isNotEmpty
+              ? settings.defaultTaxName1
+              : taxName1
+      ..taxRate1 = client.isTaxExempt
+          ? 0
+          : state.company.numberOfInvoiceTaxRates >= 1 &&
+                  (settings.defaultTaxName1 ?? '').isNotEmpty
+              ? settings.defaultTaxRate1
+              : taxRate1
+      ..taxName2 = client.isTaxExempt
+          ? ''
+          : state.company.numberOfInvoiceTaxRates >= 2 &&
+                  (settings.defaultTaxName2 ?? '').isNotEmpty
+              ? settings.defaultTaxName2
+              : taxName2
+      ..taxRate2 = client.isTaxExempt
+          ? 0
+          : state.company.numberOfInvoiceTaxRates >= 2 &&
+                  (settings.defaultTaxName2 ?? '').isNotEmpty
+              ? settings.defaultTaxRate2
+              : taxRate2
+      ..taxName3 = client.isTaxExempt
+          ? ''
+          : state.company.numberOfInvoiceTaxRates >= 3 &&
+                  (settings.defaultTaxName3 ?? '').isNotEmpty
+              ? settings.defaultTaxName3
+              : taxName3
+      ..taxRate3 = client.isTaxExempt
+          ? 0
+          : state.company.numberOfInvoiceTaxRates >= 3 &&
+                  (settings.defaultTaxName3 ?? '').isNotEmpty
+              ? settings.defaultTaxRate3
+              : taxRate3);
   }
 
   double get amount;
@@ -582,8 +607,8 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'location_id')
   String? get locationId;
 
-  //@BuiltValueField(wireName: 'e_invoice')
-  //BuiltMap<String, dynamic> get eInvoice;
+  @BuiltValueField(wireName: 'e_invoice')
+  EInvoiceEntity get eInvoice;
 
   bool get isApproved {
     if (isQuote &&
@@ -1571,7 +1596,7 @@ abstract class InvoiceEntity extends Object
     ..autoBillEnabled = false
     ..nextSendDatetime = ''
     ..taxData.replace(TaxDataEntity())
-    //..eInvoice.replace(BuiltMap<String, dynamic>())
+    ..eInvoice.replace(EInvoiceEntity())
     ..subscriptionId = ''
     ..locationId = '';
 
@@ -1593,6 +1618,7 @@ class ProductItemFields {
   static const String custom2 = 'product2';
   static const String custom3 = 'product3';
   static const String custom4 = 'product4';
+  static const String netCost = 'net_cost';
   /*
   static const String custom1 = 'custom1';
   static const String custom2 = 'custom2';

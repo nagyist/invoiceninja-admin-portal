@@ -416,6 +416,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'e_invoice_certificate_passphrase',
       serializers.serialize(object.eInvoiceCertificatePassphrase,
           specifiedType: const FullType(String)),
+      'legal_entity_id',
+      serializers.serialize(object.legalEntityId,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -1007,6 +1010,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'e_invoice_certificate_passphrase':
           result.eInvoiceCertificatePassphrase = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'legal_entity_id':
+          result.legalEntityId = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
@@ -1927,6 +1934,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String eInvoiceCertificatePassphrase;
   @override
+  final String legalEntityId;
+  @override
   final bool? isChanged;
   @override
   final int createdAt;
@@ -2064,6 +2073,7 @@ class _$CompanyEntity extends CompanyEntity {
       required this.hasEInvoiceCertificate,
       required this.hasEInvoiceCertificatePassphrase,
       required this.eInvoiceCertificatePassphrase,
+      required this.legalEntityId,
       this.isChanged,
       required this.createdAt,
       required this.updatedAt,
@@ -2201,6 +2211,7 @@ class _$CompanyEntity extends CompanyEntity {
         hasEInvoiceCertificatePassphrase ==
             other.hasEInvoiceCertificatePassphrase &&
         eInvoiceCertificatePassphrase == other.eInvoiceCertificatePassphrase &&
+        legalEntityId == other.legalEntityId &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -2332,6 +2343,7 @@ class _$CompanyEntity extends CompanyEntity {
     _$hash = $jc(_$hash, hasEInvoiceCertificate.hashCode);
     _$hash = $jc(_$hash, hasEInvoiceCertificatePassphrase.hashCode);
     _$hash = $jc(_$hash, eInvoiceCertificatePassphrase.hashCode);
+    _$hash = $jc(_$hash, legalEntityId.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -2464,6 +2476,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('hasEInvoiceCertificatePassphrase',
               hasEInvoiceCertificatePassphrase)
           ..add('eInvoiceCertificatePassphrase', eInvoiceCertificatePassphrase)
+          ..add('legalEntityId', legalEntityId)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -3074,6 +3087,11 @@ class CompanyEntityBuilder
   set eInvoiceCertificatePassphrase(String? eInvoiceCertificatePassphrase) =>
       _$this._eInvoiceCertificatePassphrase = eInvoiceCertificatePassphrase;
 
+  String? _legalEntityId;
+  String? get legalEntityId => _$this._legalEntityId;
+  set legalEntityId(String? legalEntityId) =>
+      _$this._legalEntityId = legalEntityId;
+
   bool? _isChanged;
   bool? get isChanged => _$this._isChanged;
   set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
@@ -3234,6 +3252,7 @@ class CompanyEntityBuilder
       _hasEInvoiceCertificate = $v.hasEInvoiceCertificate;
       _hasEInvoiceCertificatePassphrase = $v.hasEInvoiceCertificatePassphrase;
       _eInvoiceCertificatePassphrase = $v.eInvoiceCertificatePassphrase;
+      _legalEntityId = $v.legalEntityId;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -3515,6 +3534,8 @@ class CompanyEntityBuilder
                     eInvoiceCertificatePassphrase,
                     r'CompanyEntity',
                     'eInvoiceCertificatePassphrase'),
+            legalEntityId: BuiltValueNullFieldError.checkNotNull(
+                legalEntityId, r'CompanyEntity', 'legalEntityId'),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
                 createdAt, r'CompanyEntity', 'createdAt'),

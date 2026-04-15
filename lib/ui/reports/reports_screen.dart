@@ -22,6 +22,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -111,6 +112,7 @@ class ReportsScreen extends StatelessWidget {
       kReportDocument,
       if (state.company.isModuleEnabled(EntityType.expense)) ...[
         kReportExpense,
+        if (state.company.hasExpenseTaxes) kReportExpenseTax,
         if (state.company.isModuleEnabled(EntityType.recurringExpense))
           kReportRecurringExpense,
       ],
@@ -1606,11 +1608,15 @@ class ReportResult {
 
     keys.forEach((currencyId) {
       final values = totals[currencyId]!;
+      final currencyName =
+          store.state.staticState.currencyMap[currencyId]?.listDisplayName ??
+              '';
+      final countValue = values['count']!.toInt().toString();
       final cells = <mt.DataCell>[
-        mt.DataCell(Text(
-            store.state.staticState.currencyMap[currencyId]?.listDisplayName ??
-                '')),
-        mt.DataCell(Text(values['count']!.toInt().toString())),
+        mt.DataCell(
+            CopyToClipboard(value: currencyName, child: Text(currencyName))),
+        mt.DataCell(
+            CopyToClipboard(value: countValue, child: Text(countValue))),
       ];
 
       allFields.forEach((field) {
@@ -1629,7 +1635,8 @@ class ReportResult {
                     ? FormatNumberType.double
                     : FormatNumberType.money);
           }
-          cells.add(mt.DataCell(Text(value!)));
+          cells.add(
+              mt.DataCell(CopyToClipboard(value: value!, child: Text(value))));
         }
       });
 

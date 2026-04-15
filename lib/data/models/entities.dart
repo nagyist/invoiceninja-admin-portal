@@ -841,6 +841,10 @@ abstract class ActivityEntity
       kActivityEInvoiceSuccess,
       kActivityEInvoiceDeliverySuccess,
       kActivityEInvoiceDeliveryFailure,
+      kActivityVerifactuInvoiceSent,
+      kActivityVerifactuInvoiceSentFailure,
+      kActivityVerifactuCancellationSent,
+      kActivityVerifactuCancellationSentFailure,
     ].contains(activityTypeId)) {
       return EntityType.invoice;
     } else if ([
@@ -863,6 +867,7 @@ abstract class ActivityEntity
       kActivityVoidedPayment,
       kActivityRefundedPayment,
       kActivityViewCredit,
+      kActivityEmailCredit,
     ].contains(activityTypeId)) {
       return EntityType.credit;
     } else if ([
@@ -875,6 +880,7 @@ abstract class ActivityEntity
       kActivityRestoreQuote,
       kActivityApproveQuote,
       kActivityQuoteEmailReminder1,
+      kActivityQuoteRejected,
     ].contains(activityTypeId)) {
       return EntityType.quote;
     } else if ([

@@ -242,15 +242,15 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     } else {
       if (state.isSaving) {
         print('## Skipping refresh request - pending save');
-        next(action);
+        action.completer?.complete();
         return;
       } else if (state.isLoading) {
         print('## Skipping refresh request - pending load');
-        next(action);
+        action.completer?.complete();
         return;
       } else if (state.company.isLarge && !state.isLoaded) {
         print('## Skipping refresh request - not loaded');
-        next(action);
+        action.completer?.complete();
         return;
       }
     }
@@ -375,6 +375,11 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
             action!.completer!.complete();
           }),
       ));
+    }).catchError((Object error) {
+      store.dispatch(AddCompanyFailure(error));
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
+      }
     });
 
     next(action);

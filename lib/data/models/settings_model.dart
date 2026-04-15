@@ -899,6 +899,12 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'ses_from_address')
   String? get sesFromAddress;
 
+  @BuiltValueField(wireName: 'e_invoice_forward_email')
+  String? get eInvoiceForwardEmail;
+
+  @BuiltValueField(wireName: 'skip_automatic_email_with_peppol')
+  bool? get skipAutomaticEmailWithPeppol;
+
   bool? get taskRoundingEnabled =>
       taskRoundToNearest == null ? null : taskRoundToNearest != 1;
 

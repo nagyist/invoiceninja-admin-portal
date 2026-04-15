@@ -90,6 +90,11 @@ class AddCompany implements StartSaving {
 
 class AddCompanySuccess implements StopSaving {}
 
+class AddCompanyFailure implements StopSaving {
+  const AddCompanyFailure(this.error);
+  final Object error;
+}
+
 class DeleteCompanyRequest implements StartSaving {
   DeleteCompanyRequest({
     required this.completer,

@@ -79,6 +79,30 @@ class ScheduleListItem extends StatelessWidget {
           ' • ' + localization.lookup(kFrequencies[schedule.frequencyId]);
     } else if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_REPORT) {
       title += ': ' + localization.lookup(schedule.parameters.reportName);
+    } else if (schedule.template ==
+        ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS) {
+      if (schedule.parameters.clients!.isEmpty) {
+        title += ': ' + localization.allClients;
+      } else if (schedule.parameters.clients!.length == 1) {
+        final clientId = schedule.parameters.clients!.first;
+        title += ': ' + state.clientState.get(clientId).displayName;
+      } else {
+        title +=
+            ': ${schedule.parameters.clients!.length} ${localization.clients}';
+      }
+      subtitle +=
+          ' • ' + localization.lookup(kFrequencies[schedule.frequencyId]);
+    } else if (schedule.template ==
+        ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE) {
+      if (schedule.parameters.invoiceId != null &&
+          schedule.parameters.invoiceId!.isNotEmpty) {
+        title += ': ' +
+            state.invoiceState
+                .get(schedule.parameters.invoiceId!)
+                .listDisplayName;
+      }
+      subtitle +=
+          ' • ' + localization.lookup(kFrequencies[schedule.frequencyId]);
     }
 
     return DismissibleEntity(

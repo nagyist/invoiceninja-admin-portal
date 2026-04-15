@@ -105,13 +105,6 @@ class _$PurchaseOrderUIStateSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.forceSelected;
-    if (value != null) {
-      result
-        ..add('forceSelected')
-        ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
-    }
     return result;
   }
 
@@ -138,10 +131,6 @@ class _$PurchaseOrderUIStateSerializer
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
-          break;
-        case 'forceSelected':
-          result.forceSelected = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'tabIndex':
           result.tabIndex = serializers.deserialize(value,

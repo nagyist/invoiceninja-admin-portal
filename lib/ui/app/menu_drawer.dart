@@ -313,7 +313,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 ),
               ],
               onChanged: (dynamic value) {
-                if (value == 'logout' && !state.isLoading && !state.isSaving) {
+                if (value == 'logout') {
                   widget.viewModel.onLogoutTap(context);
                 } else if (state.isLoading) {
                   showMessageDialog(message: localization.waitForLoading);
@@ -1598,6 +1598,18 @@ void _showAbout(BuildContext context) async {
                         }
                       },
                     ),
+                  AppButton(
+                    label: localization.logout.toUpperCase(),
+                    iconData: Icons.logout,
+                    color: Colors.red,
+                    onPressed: () {
+                      confirmCallback(
+                          context: context,
+                          callback: (_) {
+                            store.dispatch(UserLogout());
+                          });
+                    },
+                  ),
                   SizedBox(height: 22),
                   Wrap(
                     alignment: WrapAlignment.center,

@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -136,7 +137,11 @@ class LoginVM {
             store.dispatch(
                 UpdateUserPreferences(moduleLayout: ModuleLayout.list));
           }
-          store.dispatch(ViewDashboard());
+          if (store.state.userCompany.canViewDashboard) {
+            store.dispatch(ViewDashboard());
+          } else {
+            store.dispatch(ViewClientList());
+          }
         } else {
           store.dispatch(ViewMainScreen());
         }

@@ -65,6 +65,7 @@ class InvoiceEditContacts extends StatelessWidget {
           return _ContactListTile(
             fullName: contact.fullName,
             email: contact.email,
+            ccOnly: contact.ccOnly,
             hash: '',
             invoice: invoice,
             invitation: invitation,
@@ -103,6 +104,7 @@ class InvoiceEditContacts extends StatelessWidget {
             fullName: contact.fullName,
             email: contact.email,
             hash: client?.clientHash ?? '',
+            ccOnly: contact.ccOnly,
             invoice: invoice,
             invitation: invitation,
             onTap: () => invitation == null
@@ -121,6 +123,7 @@ class _ContactListTile extends StatefulWidget {
     required this.email,
     required this.invoice,
     required this.hash,
+    required this.ccOnly,
     this.invitation,
     this.onTap,
   });
@@ -131,6 +134,7 @@ class _ContactListTile extends StatefulWidget {
   final InvoiceEntity invoice;
   final InvitationEntity? invitation;
   final Function? onTap;
+  final bool ccOnly;
 
   @override
   State<_ContactListTile> createState() => _ContactListTileState();
@@ -144,6 +148,14 @@ class _ContactListTileState extends State<_ContactListTile> {
     final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+
+    var contactName = widget.fullName.isNotEmpty
+        ? widget.fullName
+        : AppLocalization.of(context)!.blankContact;
+
+    if (widget.ccOnly) {
+      contactName += ' [CC]';
+    }
 
     /*
     final invitationButton = (invitation?.link ?? '').isNotEmpty
@@ -220,9 +232,7 @@ class _ContactListTileState extends State<_ContactListTile> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  widget.fullName.isNotEmpty
-                      ? widget.fullName
-                      : AppLocalization.of(context)!.blankContact,
+                  contactName,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 if (widget.email.isNotEmpty) ...[

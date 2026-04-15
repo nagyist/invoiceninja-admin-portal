@@ -6,7 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -49,6 +51,7 @@ import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/data/models/e_invoice_model.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_tax_details.dart';
@@ -56,6 +59,7 @@ import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -122,10 +126,15 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         invoice.isCredit ||
         invoice.isPurchaseOrder;
 
+    final showEInvoice = invoice.isOld &&
+        company.settings.enableEInvoice == true;
+
     _focusNode = FocusScopeNode();
     _optionTabController = TabController(
         vsync: this,
-        length: company.isModuleEnabled(EntityType.document) ? 6 : 5);
+        length: 5 +
+            (company.isModuleEnabled(EntityType.document) ? 1 : 0) +
+            (showEInvoice ? 1 : 0));
     _tableTabController = TabController(
         vsync: this, length: 2, initialIndex: _selectTasksTable ? 1 : 0);
   }
@@ -222,6 +231,240 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     }
   }
 
+  Widget _buildEInvoiceTab(
+    BuildContext context, {
+    required InvoiceEntity invoice,
+    required Function(InvoiceEntity) onChanged,
+  }) {
+    final localization = AppLocalization.of(context)!;
+    final store = StoreProvider.of<AppState>(context);
+    final state = widget.viewModel.state!;
+    final entityType = invoice.entityType;
+    final eInvoice = invoice.eInvoice;
+
+    if (entityType == EntityType.credit) {
+      final creditNote = eInvoice.creditNote ?? EInvoiceCreditNoteEntity();
+      final billingRef = creditNote.billingReference.isNotEmpty
+          ? creditNote.billingReference.first
+          : EInvoiceBillingReferenceEntity();
+      final docRef = billingRef.invoiceDocumentReference ??
+          EInvoiceDocumentReferenceEntity();
+
+      String? invoiceId;
+      if ((docRef.id ?? '').isNotEmpty) {
+        for (final id in state.invoiceState.list) {
+          final inv = state.invoiceState.map[id];
+          if (inv != null && inv.number == docRef.id) {
+            invoiceId = inv.id;
+            break;
+          }
+        }
+      }
+
+      final invoiceIds = memoizedDropdownInvoiceList(
+        state.invoiceState.map,
+        state.clientState.map,
+        state.vendorState.map,
+        state.invoiceState.list,
+        invoice.clientId,
+        state.userState.map,
+        <String?>[],
+        state.company.settings.recurringNumberPrefix,
+      );
+
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: EntityDropdown(
+              entityType: EntityType.invoice,
+              labelText: localization.invoice,
+              entityId: invoiceId ?? '',
+              entityList: invoiceIds,
+              onSelected: (selectedInvoice) {
+                final inv = selectedInvoice as InvoiceEntity?;
+                final updatedDocRef = EInvoiceDocumentReferenceEntity().rebuild(
+                    (b) => b
+                      ..id = inv?.number ?? ''
+                      ..issueDate = inv?.date ?? '');
+                final updatedBillingRef =
+                    EInvoiceBillingReferenceEntity().rebuild((b) =>
+                        b..invoiceDocumentReference.replace(updatedDocRef));
+                final updatedCreditNote = EInvoiceCreditNoteEntity().rebuild(
+                    (b) => b
+                      ..billingReference.replace(
+                          BuiltList<EInvoiceBillingReferenceEntity>(
+                              [updatedBillingRef])));
+                final updatedEInvoice = eInvoice
+                    .rebuild((b) => b..creditNote.replace(updatedCreditNote));
+                onChanged(invoice
+                    .rebuild((b) => b..eInvoice.replace(updatedEInvoice)));
+              },
+            ),
+          ),
+          AppButton(
+            label: localization.send.toUpperCase(),
+            onPressed: () {
+              final url = state.credentials.url + '/einvoice/peppol/send';
+              store.dispatch(StartSaving());
+              WebClient()
+                  .post(
+                url,
+                state.credentials.token,
+                data: json.encode({
+                  'entity': entityType!.apiValue,
+                  'entity_id': invoice.id,
+                }),
+              )
+                  .then((_) {
+                store.dispatch(StopSaving());
+                showToast(localization.emailedInvoice);
+                store.dispatch(RefreshData());
+              }).catchError((error) {
+                store.dispatch(StopSaving());
+                showErrorDialog(message: '$error');
+              });
+            },
+          ),
+        ],
+      );
+    }
+
+    final eInvoiceInvoice = eInvoice.invoice ?? EInvoiceInvoiceEntity();
+    final period = eInvoiceInvoice.invoicePeriod.isNotEmpty
+        ? eInvoiceInvoice.invoicePeriod.first
+        : EInvoiceInvoicePeriodEntity();
+    final delivery = eInvoiceInvoice.delivery.isNotEmpty
+        ? eInvoiceInvoice.delivery.first
+        : EInvoiceDeliveryEntity();
+
+    void updatePeriod(EInvoiceInvoicePeriodEntity updatedPeriod) {
+      final updatedInvoice = eInvoiceInvoice.rebuild((b) => b
+        ..invoicePeriod
+            .replace(BuiltList<EInvoiceInvoicePeriodEntity>([updatedPeriod])));
+      final updatedEInvoice =
+          eInvoice.rebuild((b) => b..invoice.replace(updatedInvoice));
+      onChanged(invoice.rebuild((b) => b..eInvoice.replace(updatedEInvoice)));
+    }
+
+    if (entityType == EntityType.recurringInvoice) {
+      final description = period.description ?? '';
+      final parts = description.split('|');
+      final startValue = parts.isNotEmpty ? parts[0] : '';
+      final endValue = parts.length > 1 ? parts[1] : '';
+
+      return Column(
+        children: [
+          DecoratedFormField(
+            label: localization.startDate,
+            initialValue: startValue,
+            keyboardType: TextInputType.multiline,
+            maxLines: 2,
+            onChanged: (value) {
+              final end = description.contains('|')
+                  ? description.split('|').last
+                  : '';
+              final updatedPeriod =
+                  period.rebuild((b) => b..description = '$value|$end');
+              updatePeriod(updatedPeriod);
+            },
+          ),
+          DecoratedFormField(
+            label: localization.endDate,
+            initialValue: endValue,
+            keyboardType: TextInputType.multiline,
+            maxLines: 2,
+            onChanged: (value) {
+              final start = description.contains('|')
+                  ? description.split('|').first
+                  : '';
+              final updatedPeriod =
+                  period.rebuild((b) => b..description = '$start|$value');
+              updatePeriod(updatedPeriod);
+            },
+          ),
+        ],
+      );
+    }
+
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: DatePicker(
+                labelText: localization.startDate,
+                selectedDate: period.startDate ?? '',
+                onSelected: (date, _) {
+                  updatePeriod(period.rebuild((b) => b..startDate = date));
+                },
+              ),
+            ),
+            SizedBox(width: kTableColumnGap),
+            Expanded(
+              child: DatePicker(
+                labelText: localization.endDate,
+                selectedDate: period.endDate ?? '',
+                onSelected: (date, _) {
+                  updatePeriod(period.rebuild((b) => b..endDate = date));
+                },
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: DatePicker(
+                labelText: localization.actualDeliveryDate,
+                selectedDate: delivery.actualDeliveryDate ?? '',
+                onSelected: (date, _) {
+                  final updatedDelivery =
+                      delivery.rebuild((b) => b..actualDeliveryDate = date);
+                  final updatedInvoice = eInvoiceInvoice.rebuild((b) => b
+                    ..delivery.replace(
+                        BuiltList<EInvoiceDeliveryEntity>([updatedDelivery])));
+                  final updatedEInvoice = eInvoice
+                      .rebuild((b) => b..invoice.replace(updatedInvoice));
+                  onChanged(invoice
+                      .rebuild((b) => b..eInvoice.replace(updatedEInvoice)));
+                },
+              ),
+            ),
+            SizedBox(width: kTableColumnGap),
+            Expanded(
+              child: AppButton(
+                label: localization.send.toUpperCase(),
+                onPressed: () {
+                  final url =
+                      state.credentials.url + '/einvoice/peppol/send';
+                  store.dispatch(StartSaving());
+                  WebClient()
+                      .post(
+                    url,
+                    state.credentials.token,
+                    data: json.encode({
+                      'entity': entityType!.apiValue,
+                      'entity_id': invoice.id,
+                    }),
+                  )
+                      .then((_) {
+                    store.dispatch(StopSaving());
+                    showToast(localization.emailedInvoice);
+                    store.dispatch(RefreshData());
+                  }).catchError((error) {
+                    store.dispatch(StopSaving());
+                    showErrorDialog(message: '$error');
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   void _onSavePressed(BuildContext context) {
     final viewModel = widget.entityViewModel;
     viewModel.onSavePressed!(context);
@@ -238,6 +481,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final client = state.clientState.get(invoice.clientId);
     final vendor = state.vendorState.get(invoice.vendorId);
     final entityType = invoice.entityType;
+    final showEInvoice = invoice.isOld &&
+        company.settings.enableEInvoice == true;
     final originalInvoice =
         (state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity?) ??
             invoice;
@@ -764,6 +1009,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         (invoice.documents.isNotEmpty
                                             ? ' (${invoice.documents.length})'
                                             : '')),
+                              if (showEInvoice)
+                                Tab(
+                                    text: localization.eInvoice),
                             ],
                           ),
                           SizedBox(
@@ -1031,7 +1279,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                               context, path, isPrivate),
                                       onRenamedDocument: () => store.dispatch(
                                           LoadInvoice(invoiceId: invoice.id)),
-                                    )
+                                    ),
+                                if (showEInvoice)
+                                  _buildEInvoiceTab(
+                                    context,
+                                    invoice: invoice,
+                                    onChanged: viewModel.onChanged!,
+                                  ),
                               ],
                             ),
                           ),

@@ -122,8 +122,11 @@ class _UpdateDialogState extends State<UpdateDialog> {
                       ),
                     ],
                     SizedBox(height: 20),
-                    Text(localization.latestRequiresPhpVersion
-                        .replaceFirst(':version', phpVersion ?? '...')),
+                    SizedBox(
+                      width: 400,
+                      child: Text(localization.latestRequiresPhpVersion
+                          .replaceFirst(':version', phpVersion ?? '...')),
+                    ),
                   ],
                 ),
       actions: <Widget>[

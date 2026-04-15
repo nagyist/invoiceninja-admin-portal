@@ -1087,6 +1087,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             ProductItemFields.custom3,
                             ProductItemFields.custom4,
                             ProductItemFields.grossLineTotal,
+                            ProductItemFields.netCost,
                           ].map((field) => '\$product.$field').toList(),
                           defaultSelected: [
                             ProductItemFields.item,

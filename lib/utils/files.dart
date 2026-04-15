@@ -11,7 +11,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -105,12 +104,15 @@ void saveDownloadedFile(
   Uint8List data,
   String fileName, {
   String? prefix,
-  String languageId = kLanguageEnglish,
+  String languageId = '',
 }) async {
   if (prefix != null) {
     final localization = AppLocalization.of(navigatorKey.currentContext!)!;
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
-    final localeCode = store.state.staticState.languageMap[languageId]!.locale;
+    final effectiveLanguageId =
+        languageId.isNotEmpty ? languageId : store.state.company.languageId;
+    final localeCode =
+        store.state.staticState.languageMap[effectiveLanguageId]!.locale;
 
     fileName = localization.lookup(prefix, overrideLocaleCode: localeCode) +
         '_' +

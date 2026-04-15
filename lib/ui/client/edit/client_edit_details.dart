@@ -293,7 +293,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               keyboardType: TextInputType.text,
               onSavePressed: _onSavePressed,
             ),
-          if (state.company.calculateTaxes) ...[
+          if (state.company.hasTaxes || state.company.calculateTaxes) ...[
             AppDropdownButton<String>(
               labelText: localization.classification,
               showBlank: true,

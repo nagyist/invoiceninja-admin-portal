@@ -10,6 +10,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -772,7 +773,14 @@ Future handleQuoteAction(
       final http.Response? response =
           await WebClient().get(url, state.token, rawResponse: true);
       store.dispatch(StopSaving());
-      await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
+      try {
+        await Printing.layoutPdf(
+            onLayout: (_) => response!.bodyBytes, dynamicLayout: false);
+      } catch (error) {
+        showDialog<void>(
+            context: navigatorKey.currentContext!,
+            builder: (context) => ErrorDialog(error));
+      }
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
@@ -782,7 +790,14 @@ Future handleQuoteAction(
       final http.Response? response = await WebClient()
           .post(url, state.credentials.token, data: data, rawResponse: true);
       store.dispatch(StopSaving());
-      await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
+      try {
+        await Printing.layoutPdf(
+            onLayout: (_) => response!.bodyBytes, dynamicLayout: false);
+      } catch (error) {
+        showDialog<void>(
+            context: navigatorKey.currentContext!,
+            builder: (context) => ErrorDialog(error));
+      }
       break;
     case EntityAction.more:
       showEntityActionsDialog(

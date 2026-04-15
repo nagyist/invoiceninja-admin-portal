@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.183';
+const String kClientVersion = '5.0.187';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -274,6 +274,12 @@ const String kEInvoiceTypeFacturae_3_2 = 'Facturae_3.2';
 const String kEInvoiceTypeFacturae_3_2_1 = 'Facturae_3.2.1';
 const String kEInvoiceTypeFacturae_3_2_2 = 'Facturae_3.2.2';
 const String kEInvoiceTypeFACT1 = 'FACT1';
+const String kEInvoiceTypeFatturaPA = 'FatturaPA';
+const String kEInvoiceTypePEPPOL = 'PEPPOL';
+const String kEInvoiceTypeVERIFACTU = 'VERIFACTU';
+const String kEInvoiceTypeOrderX_Basic = 'OrderX_Basic';
+const String kEInvoiceTypeOrderX_Comfort = 'OrderX_Comfort';
+const String kEInvoiceTypeOrderX_Extended = 'OrderX_Extended';
 
 const kEInvoiceTypes = [
   kEInvoiceTypeEN16931,
@@ -290,6 +296,12 @@ const kEInvoiceTypes = [
   kEInvoiceTypeFacturae_3_2_1,
   kEInvoiceTypeFacturae_3_2,
   kEInvoiceTypeFACT1,
+  kEInvoiceTypeFatturaPA,
+  kEInvoiceTypePEPPOL,
+  kEInvoiceTypeVERIFACTU,
+  kEInvoiceTypeOrderX_Basic,
+  kEInvoiceTypeOrderX_Comfort,
+  kEInvoiceTypeOrderX_Extended,
 ];
 
 const String kEQuoteTypeOrderX_Comfort = 'OrderX_Comfort';
@@ -300,6 +312,182 @@ const kEQuoteTypes = [
   kEQuoteTypeOrderX_Comfort,
   kEQuoteTypeOrderX_Basic,
   kEQuoteType,
+];
+
+const kPaymentMeansCodes = <String, String>{
+  '1': 'Instrument not defined',
+  '2': 'Automated clearing house credit',
+  '3': 'Automated clearing house debit',
+  '4': 'ACH demand debit reversal',
+  '5': 'ACH demand credit reversal',
+  '6': 'ACH demand credit',
+  '7': 'ACH demand debit',
+  '8': 'Hold',
+  '9': 'National or regional clearing',
+  '10': 'In cash',
+  '11': 'ACH savings credit reversal',
+  '12': 'ACH savings debit reversal',
+  '13': 'ACH savings credit',
+  '14': 'ACH savings debit',
+  '15': 'Bookentry credit',
+  '16': 'Bookentry debit',
+  '17': 'ACH demand CCD credit',
+  '18': 'ACH demand CCD debit',
+  '19': 'ACH demand CTP credit',
+  '20': 'Cheque',
+  '21': 'Banker\'s draft',
+  '22': 'Certified banker\'s draft',
+  '23': 'Bank cheque',
+  '24': 'Bill of exchange awaiting acceptance',
+  '25': 'Certified cheque',
+  '26': 'Local cheque',
+  '27': 'ACH demand CTP debit',
+  '28': 'ACH demand CTX credit',
+  '29': 'ACH demand CTX debit',
+  '30': 'Credit transfer',
+  '31': 'Debit transfer',
+  '32': 'ACH demand CCD+ credit',
+  '33': 'ACH demand CCD+ debit',
+  '34': 'ACH prearranged payment and deposit (PPD)',
+  '35': 'ACH savings CCD credit',
+  '36': 'ACH savings CCD debit',
+  '37': 'ACH savings CTP credit',
+  '38': 'ACH savings CTP debit',
+  '39': 'ACH savings CTX credit',
+  '40': 'ACH savings CTX debit',
+  '41': 'ACH savings CCD+ credit',
+  '42': 'Payment to bank account',
+  '43': 'ACH savings CCD+ debit',
+  '44': 'Accepted bill of exchange',
+  '45': 'Referenced home-banking credit transfer',
+  '46': 'Interbank debit transfer',
+  '47': 'Home-banking debit transfer',
+  '48': 'Bank card',
+  '49': 'Direct debit',
+  '50': 'Payment by postgiro',
+  '51': 'FR, norme 6 97-Telereglement CFONB',
+  '52': 'Urgent commercial payment',
+  '53': 'Urgent Treasury Payment',
+  '54': 'Credit card',
+  '55': 'Debit card',
+  '56': 'Bankgiro',
+  '57': 'Standing agreement',
+  '58': 'SEPA credit transfer',
+  '59': 'SEPA direct debit',
+  '60': 'Promissory note',
+  '61': 'Promissory note signed by the debtor',
+  '62': 'Promissory note signed by debtor and endorsed by bank',
+  '63': 'Promissory note signed by debtor and endorsed by third party',
+  '64': 'Promissory note signed by a bank',
+  '65': 'Promissory note signed by bank and endorsed by another bank',
+  '66': 'Promissory note signed by a third party',
+  '67': 'Promissory note signed by third party and endorsed by bank',
+  '68': 'Online payment service',
+  '69': 'Transfer Advice',
+  '70': 'Bill drawn by the creditor on the debtor',
+  '74': 'Bill drawn by the creditor on a bank',
+  '75': 'Bill drawn by creditor, endorsed by another bank',
+  '76': 'Bill drawn by creditor on bank and endorsed by third party',
+  '77': 'Bill drawn by the creditor on a third party',
+  '78': 'Bill drawn by creditor on third party, accepted and endorsed',
+  '91': 'Not transferable banker\'s draft',
+  '92': 'Not transferable local cheque',
+  '93': 'Reference giro',
+  '94': 'Urgent giro',
+  '95': 'Free format giro',
+  '96': 'Requested method for payment was not used',
+  '97': 'Clearing between partners',
+  'ZZZ': 'Mutually defined',
+};
+
+const kPaymentMeansFormElements = <String, List<String>>{
+  '1': [],
+  '2': ['iban', 'bic_swift'],
+  '3': ['payer_bank_account', 'iban', 'bic_swift'],
+  '4': ['payer_bank_account', 'iban', 'bic_swift'],
+  '5': ['iban', 'bic_swift'],
+  '6': ['iban', 'bic_swift'],
+  '7': ['payer_bank_account', 'iban', 'bic_swift'],
+  '8': [],
+  '9': ['iban', 'bic_swift'],
+  '10': [],
+  '11': ['iban', 'bic_swift'],
+  '12': ['payer_bank_account', 'iban', 'bic_swift'],
+  '13': ['iban', 'bic_swift'],
+  '14': ['payer_bank_account', 'iban', 'bic_swift'],
+  '15': ['account_holder', 'bsb_sort'],
+  '16': ['account_holder', 'bsb_sort'],
+  '17': ['iban', 'bic_swift'],
+  '18': ['payer_bank_account', 'iban', 'bic_swift'],
+  '19': ['iban', 'bic_swift'],
+  '20': [],
+  '21': [],
+  '22': [],
+  '23': [],
+  '24': [],
+  '25': [],
+  '26': [],
+  '27': ['payer_bank_account', 'iban', 'bic_swift'],
+  '28': ['iban', 'bic_swift'],
+  '29': ['payer_bank_account', 'iban', 'bic_swift'],
+  '30': ['iban', 'bic_swift', 'account_holder'],
+  '31': ['iban', 'bic_swift', 'account_holder'],
+  '32': ['iban', 'bic_swift', 'account_holder'],
+  '33': ['payer_bank_account', 'iban', 'bic_swift', 'account_holder'],
+  '34': ['iban', 'bic_swift', 'account_holder'],
+  '35': ['iban', 'bic_swift', 'account_holder'],
+  '36': ['payer_bank_account', 'iban', 'bic_swift', 'account_holder'],
+  '37': ['iban', 'bic_swift', 'account_holder'],
+  '38': ['payer_bank_account', 'iban', 'bic_swift', 'account_holder'],
+  '39': ['iban', 'bic_swift', 'account_holder'],
+  '40': ['payer_bank_account', 'iban', 'bic_swift', 'account_holder'],
+  '41': ['iban', 'bic_swift', 'account_holder'],
+  '42': ['iban', 'bic_swift', 'account_holder'],
+  '43': ['payer_bank_account', 'iban', 'bic_swift', 'account_holder'],
+  '44': [],
+  '45': ['iban', 'bic_swift'],
+  '46': ['iban', 'bic_swift'],
+  '47': ['iban', 'bic_swift'],
+  '48': ['card_type', 'card_number'],
+  '49': ['payer_bank_account', 'iban', 'bic_swift'],
+  '50': ['account_holder'],
+  '51': ['iban', 'bic_swift'],
+  '52': ['iban', 'bic_swift'],
+  '53': ['iban', 'bic_swift'],
+  '54': ['card_type', 'card_number', 'card_holder'],
+  '55': ['card_type', 'card_number', 'card_holder'],
+  '56': ['account_holder'],
+  '57': ['iban', 'bic_swift'],
+  '58': ['account_holder', 'iban', 'bic_swift'],
+  '59': ['account_holder', 'iban', 'bic_swift'],
+  '60': [],
+  '61': [],
+  '62': ['bic_swift'],
+  '63': [],
+  '64': ['bic_swift'],
+  '65': ['bic_swift'],
+  '66': [],
+  '67': ['bic_swift'],
+  '68': ['iban'],
+  '69': ['iban', 'bic_swift'],
+  '70': [],
+  '74': ['bic_swift'],
+  '75': ['bic_swift'],
+  '76': ['bic_swift'],
+  '77': [],
+  '78': [],
+  '91': [],
+  '92': [],
+  '93': ['iban', 'bic_swift'],
+  '94': ['iban', 'bic_swift'],
+  '95': ['iban', 'bic_swift'],
+  '96': [],
+  '97': ['account_holder'],
+  'ZZZ': [],
+};
+
+const kPeppolCountries = [
+  '40', '56', '208', '276', '352', '372', '442', '528', '578', '752', '826',
 ];
 
 const String kCountryUnitedStates = '840';
@@ -368,6 +556,7 @@ const String kQuoteStatusDraft = '1';
 const String kQuoteStatusSent = '2';
 const String kQuoteStatusApproved = '3';
 const String kQuoteStatusConverted = '4';
+const String kQuoteStatusRejected = '5';
 
 const kQuoteStatuses = {
   kQuoteStatusExpired: 'expired',
@@ -377,6 +566,7 @@ const kQuoteStatuses = {
   kQuoteStatusConverted: 'converted',
   kQuoteStatusViewed: 'viewed',
   kQuoteStatusBounced: 'bounced',
+  kQuoteStatusRejected: 'rejected',
 };
 
 const String kCreditStatusBounced = '-2';
@@ -504,6 +694,7 @@ const String kNotificationsQuoteSent = 'quote_sent';
 const String kNotificationsQuoteViewed = 'quote_viewed';
 const String kNotificationsQuoteExpired = 'quote_expired';
 const String kNotificationsQuoteApproved = 'quote_approved';
+const String kNotificationsQuoteRejected = 'quote_rejected';
 const String kNotificationsCreditCreated = 'credit_created';
 const String kNotificationsCreditSent = 'credit_sent';
 const String kNotificationsCreditViewed = 'credit_viewed';
@@ -513,6 +704,10 @@ const String kNotificationsPurchaseOrderViewed = 'purchase_order_viewed';
 const String kNotificationsPurchaseOrderAccepted = 'purchase_order_accepted';
 const String kNotificationsInventoryThreshold = 'inventory_threshold';
 const String kNotificationsTaskAssigned = 'task_assigned';
+const String kNotificationsDisableRecurringPayment =
+    'disable_recurring_payment_notification';
+const String kNotificationsEInvoiceReceived =
+    'enable_e_invoice_received_notification';
 
 const kNotificationEvents = [
   kNotificationsInvoiceCreated,
@@ -527,6 +722,7 @@ const kNotificationEvents = [
   kNotificationsQuoteViewed,
   kNotificationsQuoteApproved,
   kNotificationsQuoteExpired,
+  kNotificationsQuoteRejected,
   kNotificationsCreditCreated,
   kNotificationsCreditSent,
   kNotificationsCreditViewed,
@@ -706,6 +902,7 @@ const String kReportCredit = 'credit';
 const String kReportCreditItem = 'credit_item';
 const String kReportDocument = 'document';
 const String kReportExpense = 'expense';
+const String kReportExpenseTax = 'expense_tax';
 const String kReportInvoice = 'invoice';
 const String kReportPayment = 'payment';
 const String kReportProduct = 'product';
@@ -737,6 +934,7 @@ final kReportMap = {
   kReportProfitAndLoss: ExportType.profitloss,
   kReportTask: ExportType.tasks,
   kReportTaskItem: null,
+  kReportExpenseTax: null,
   kReportInvoiceTax: ExportType.tax_summary,
   kReportPaymentTax: null,
   kReportQuote: ExportType.quotes,
@@ -895,6 +1093,7 @@ const Map<int, String> kModules = {
 const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
 
 const List<String> kLanguages = [
+  'af_ZA',
   'ar',
   'bg',
   'ca',
@@ -904,7 +1103,6 @@ const List<String> kLanguages = [
   'el',
   'en',
   'en_GB',
-  'en_AU',
   'es',
   'es_ES',
   'et',
@@ -914,9 +1112,12 @@ const List<String> kLanguages = [
   'fr_CA',
   'fr_CH',
   'hu',
+  'he',
   'hr',
+  'id_ID',
   'it',
   'ja',
+  'km_KH',
   'lo_LA',
   'lt',
   'lv_LV',
@@ -1159,3 +1360,8 @@ const String kActivityAccountDeleted = '150';
 const String kActivityMergedClients = '151';
 const String kActivityMergedVendors = '152';
 const String kActivityPurgedClient = '153';
+const String kActivityVerifactuInvoiceSent = '154';
+const String kActivityVerifactuInvoiceSentFailure = '155';
+const String kActivityVerifactuCancellationSent = '156';
+const String kActivityVerifactuCancellationSentFailure = '157';
+const String kActivityQuoteRejected = '158';

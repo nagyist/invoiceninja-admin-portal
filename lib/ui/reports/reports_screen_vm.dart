@@ -40,6 +40,7 @@ import 'package:invoiceninja_flutter/ui/reports/client_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/contact_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/document_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/expense_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/expense_tax_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_item_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_tax_report.dart';
@@ -169,6 +170,17 @@ class ReportsScreenVM {
           state.vendorState.map,
           state.projectState.map,
           state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportExpenseTax:
+        reportResult = memoizedExpenseTaxReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.expenseState.map,
+          state.expenseCategoryState.map,
+          state.clientState.map,
+          state.vendorState.map,
           state.staticState,
         );
         break;

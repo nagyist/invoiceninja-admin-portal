@@ -351,6 +351,34 @@ class _$ScheduleParametersSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.autoSend;
+    if (value != null) {
+      result
+        ..add('auto_send')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.includeProjectTasks;
+    if (value != null) {
+      result
+        ..add('include_project_tasks')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.invoiceId;
+    if (value != null) {
+      result
+        ..add('invoice_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.autoBill;
+    if (value != null) {
+      result
+        ..add('auto_bill')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -411,6 +439,22 @@ class _$ScheduleParametersSerializer
         case 'report_name':
           result.reportName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'auto_send':
+          result.autoSend = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'include_project_tasks':
+          result.includeProjectTasks = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'invoice_id':
+          result.invoiceId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'auto_bill':
+          result.autoBill = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
           break;
       }
     }
@@ -904,6 +948,14 @@ class _$ScheduleParameters extends ScheduleParameters {
   final String? entityId;
   @override
   final String? reportName;
+  @override
+  final bool? autoSend;
+  @override
+  final bool? includeProjectTasks;
+  @override
+  final String? invoiceId;
+  @override
+  final bool? autoBill;
 
   factory _$ScheduleParameters(
           [void Function(ScheduleParametersBuilder)? updates]) =>
@@ -920,7 +972,11 @@ class _$ScheduleParameters extends ScheduleParameters {
       this.clients,
       this.entityType,
       this.entityId,
-      this.reportName})
+      this.reportName,
+      this.autoSend,
+      this.includeProjectTasks,
+      this.invoiceId,
+      this.autoBill})
       : super._();
   @override
   ScheduleParameters rebuild(
@@ -945,7 +1001,11 @@ class _$ScheduleParameters extends ScheduleParameters {
         clients == other.clients &&
         entityType == other.entityType &&
         entityId == other.entityId &&
-        reportName == other.reportName;
+        reportName == other.reportName &&
+        autoSend == other.autoSend &&
+        includeProjectTasks == other.includeProjectTasks &&
+        invoiceId == other.invoiceId &&
+        autoBill == other.autoBill;
   }
 
   int? __hashCode;
@@ -964,6 +1024,10 @@ class _$ScheduleParameters extends ScheduleParameters {
     _$hash = $jc(_$hash, entityType.hashCode);
     _$hash = $jc(_$hash, entityId.hashCode);
     _$hash = $jc(_$hash, reportName.hashCode);
+    _$hash = $jc(_$hash, autoSend.hashCode);
+    _$hash = $jc(_$hash, includeProjectTasks.hashCode);
+    _$hash = $jc(_$hash, invoiceId.hashCode);
+    _$hash = $jc(_$hash, autoBill.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -981,7 +1045,11 @@ class _$ScheduleParameters extends ScheduleParameters {
           ..add('clients', clients)
           ..add('entityType', entityType)
           ..add('entityId', entityId)
-          ..add('reportName', reportName))
+          ..add('reportName', reportName)
+          ..add('autoSend', autoSend)
+          ..add('includeProjectTasks', includeProjectTasks)
+          ..add('invoiceId', invoiceId)
+          ..add('autoBill', autoBill))
         .toString();
   }
 }
@@ -1038,6 +1106,23 @@ class ScheduleParametersBuilder
   String? get reportName => _$this._reportName;
   set reportName(String? reportName) => _$this._reportName = reportName;
 
+  bool? _autoSend;
+  bool? get autoSend => _$this._autoSend;
+  set autoSend(bool? autoSend) => _$this._autoSend = autoSend;
+
+  bool? _includeProjectTasks;
+  bool? get includeProjectTasks => _$this._includeProjectTasks;
+  set includeProjectTasks(bool? includeProjectTasks) =>
+      _$this._includeProjectTasks = includeProjectTasks;
+
+  String? _invoiceId;
+  String? get invoiceId => _$this._invoiceId;
+  set invoiceId(String? invoiceId) => _$this._invoiceId = invoiceId;
+
+  bool? _autoBill;
+  bool? get autoBill => _$this._autoBill;
+  set autoBill(bool? autoBill) => _$this._autoBill = autoBill;
+
   ScheduleParametersBuilder();
 
   ScheduleParametersBuilder get _$this {
@@ -1054,6 +1139,10 @@ class ScheduleParametersBuilder
       _entityType = $v.entityType;
       _entityId = $v.entityId;
       _reportName = $v.reportName;
+      _autoSend = $v.autoSend;
+      _includeProjectTasks = $v.includeProjectTasks;
+      _invoiceId = $v.invoiceId;
+      _autoBill = $v.autoBill;
       _$v = null;
     }
     return this;
@@ -1088,6 +1177,10 @@ class ScheduleParametersBuilder
             entityType: entityType,
             entityId: entityId,
             reportName: reportName,
+            autoSend: autoSend,
+            includeProjectTasks: includeProjectTasks,
+            invoiceId: invoiceId,
+            autoBill: autoBill,
           );
     } catch (_) {
       late String _$failedField;

@@ -581,6 +581,7 @@ abstract class VendorContactEntity extends Object
       customValue4: '',
       link: '',
       password: '',
+      ccOnly: false,
     );
   }
 
@@ -626,6 +627,9 @@ abstract class VendorContactEntity extends Object
   String get customValue4;
 
   String get link;
+
+  @BuiltValueField(wireName: 'cc_only')
+  bool get ccOnly;
 
   String get silentLink => '$link?silent=true';
 
@@ -705,7 +709,8 @@ abstract class VendorContactEntity extends Object
     ..customValue1 = ''
     ..customValue2 = ''
     ..customValue3 = ''
-    ..customValue4 = '';
+    ..customValue4 = ''
+    ..ccOnly = false;
 
   static Serializer<VendorContactEntity> get serializer =>
       _$vendorContactEntitySerializer;

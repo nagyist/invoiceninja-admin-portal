@@ -17,6 +17,7 @@ abstract mixin class EntityUIState {
 
   String? get selectedId;
 
+  @BuiltValueField(serialize: false)
   bool? get forceSelected;
 
   int get tabIndex;

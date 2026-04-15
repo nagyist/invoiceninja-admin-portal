@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_e_invoice_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart';
@@ -46,10 +47,15 @@ class _InvoiceEditState extends State<InvoiceEdit>
     super.initState();
 
     final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice!;
+    final state = viewModel.state!;
+    final showEInvoice = invoice.isOld &&
+        state.company.settings.enableEInvoice == true;
 
     final index =
         viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
-    _controller = TabController(vsync: this, length: 5, initialIndex: index);
+    _controller = TabController(
+        vsync: this, length: showEInvoice ? 6 : 5, initialIndex: index);
   }
 
   @override
@@ -104,6 +110,8 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final client = state.clientState.get(invoice.clientId);
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
+    final showEInvoice = invoice.isOld &&
+        state.company.settings.enableEInvoice == true;
 
     return EditScaffold(
       isFullscreen: isFullscreen,
@@ -135,6 +143,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
           Tab(
             text: localization.pdf,
           ),
+          if (showEInvoice)
+            Tab(
+              text: localization.eInvoice,
+            ),
         ],
       ),
       body: Form(
@@ -158,6 +170,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   ),
                   InvoiceEditNotesScreen(),
                   InvoiceEditPDFScreen(),
+                  if (showEInvoice) InvoiceEditEInvoiceScreen(),
                 ],
               ),
       ),

@@ -177,8 +177,6 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           );
                         },
                         items: ScheduleEntity.TEMPLATES
-                            .where((entry) =>
-                                entry != ScheduleEntity.TEMPLATE_EMAIL_REPORT)
                             .map((entry) => DropdownMenuItem(
                                   value: entry,
                                   child: Text(localization.lookup(entry)),
@@ -521,6 +519,111 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                                 child: Text(localization.thirdCustom),
                                 value: EmailTemplate.custom3.toString()),
                           ]),
+                    ],
+                  ),
+                ] else if (schedule.template ==
+                    ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS) ...[
+                  FormCard(children: [
+                    AppDropdownButton<DateRange>(
+                      labelText: localization.dateRange,
+                      blankValue: null,
+                      value: parameters.dateRange!.isNotEmpty
+                          ? DateRange.valueOf(
+                              toCamelCase(parameters.dateRange!))
+                          : null,
+                      onChanged: (dynamic value) {
+                        viewModel.onChanged(schedule.rebuild((b) => b
+                          ..parameters.dateRange =
+                              (value as DateRange).snakeCase));
+                      },
+                      items: DateRange.values
+                          .where((value) => value != DateRange.custom)
+                          .map((dateRange) => DropdownMenuItem<DateRange>(
+                                child: Text(
+                                    localization.lookup(dateRange.toString())),
+                                value: dateRange,
+                              ))
+                          .toList(),
+                    ),
+                    SizedBox(height: 20),
+                    BoolDropdownButton(
+                        label: localization.autoSend,
+                        value: parameters.autoSend,
+                        onChanged: (value) {
+                          viewModel.onChanged(schedule.rebuild(
+                              (b) => b..parameters.autoSend = value));
+                        }),
+                    BoolDropdownButton(
+                        label: localization.includeProjectTasks,
+                        value: parameters.includeProjectTasks,
+                        onChanged: (value) {
+                          viewModel.onChanged(schedule.rebuild((b) =>
+                              b..parameters.includeProjectTasks = value));
+                        }),
+                  ]),
+                  FormCard(
+                    isLast: true,
+                    children: [
+                      ClientPicker(
+                          key: ValueKey(
+                              '__outstanding_tasks_client_picker_${_clientClearedAt}__'),
+                          isRequired: false,
+                          clientId: null,
+                          clientState: state.clientState,
+                          excludeIds: parameters.clients!.toList(),
+                          onSelected: (value) {
+                            if (value == null) {
+                              return;
+                            }
+                            if (!parameters.clients!.contains(value.id)) {
+                              viewModel.onChanged(schedule.rebuild(
+                                  (b) => b..parameters.clients.add(value.id)));
+                            }
+                            setState(() {
+                              _clientClearedAt =
+                                  DateTime.now().toIso8601String();
+                            });
+                          }),
+                      SizedBox(height: 20),
+                      if (parameters.clients!.isEmpty)
+                        HelpText(localization.allClients),
+                      for (var clientId in parameters.clients!)
+                        ListTile(
+                          title:
+                              Text(state.clientState.get(clientId).displayName),
+                          trailing: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              viewModel.onChanged(schedule.rebuild((b) =>
+                                  b..parameters.clients.remove(clientId)));
+                            },
+                          ),
+                        ),
+                    ],
+                  )
+                ] else if (schedule.template ==
+                    ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE) ...[
+                  FormCard(
+                    isLast: true,
+                    children: [
+                      EntityDropdown(
+                        labelText: localization.invoice,
+                        entityType: EntityType.invoice,
+                        entityList: invoiceIds,
+                        entityId: parameters.invoiceId,
+                        onSelected: (value) {
+                          viewModel.onChanged(schedule.rebuild((b) =>
+                              b..parameters.invoiceId = value?.id ?? ''));
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      BoolDropdownButton(
+                          label: localization.autoBill,
+                          value: parameters.autoBill,
+                          onChanged: (value) {
+                            viewModel.onChanged(schedule.rebuild(
+                                (b) => b..parameters.autoBill = value));
+                          }),
                     ],
                   ),
                 ],

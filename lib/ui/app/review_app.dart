@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ReviewApp extends StatefulWidget {
@@ -43,6 +42,9 @@ class _ReviewAppState extends State<ReviewApp> {
             children: [
               TextButton(
                 onPressed: () async {
+                  launchUrl(Uri.parse(getRateAppURL(context)));
+
+                  /*
                   // TODO remove this code: https://github.com/britannio/in_app_review/issues/56
                   if (kIsWeb || isLinux()) {
                     launchUrl(Uri.parse(getRateAppURL(context)));
@@ -53,6 +55,7 @@ class _ReviewAppState extends State<ReviewApp> {
                   } else {
                     AppReview.openStoreListing();
                   }
+                  */
 
                   if (state.showTwoYearReviewApp) {
                     store.dispatch(DismissTwoYearReviewAppPermanently());

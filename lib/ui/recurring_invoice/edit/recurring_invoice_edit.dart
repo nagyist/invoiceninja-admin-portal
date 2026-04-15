@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_e_invoice_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_notes_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_pdf_vm.dart';
@@ -42,10 +43,15 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     super.initState();
 
     final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice!;
+    final state = viewModel.state!;
+    final showEInvoice = invoice.isOld &&
+        state.company.settings.enableEInvoice == true;
 
     final index =
         viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
-    _controller = TabController(vsync: this, length: 5, initialIndex: index);
+    _controller = TabController(
+        vsync: this, length: showEInvoice ? 6 : 5, initialIndex: index);
   }
 
   @override
@@ -89,6 +95,8 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     final prefState = state.prefState;
     final client = state.clientState.get(invoice.clientId);
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
+    final showEInvoice = invoice.isOld &&
+        state.company.settings.enableEInvoice == true;
 
     return EditScaffold(
       entity: invoice,
@@ -122,6 +130,10 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
           Tab(
             text: localization.pdf,
           ),
+          if (showEInvoice)
+            Tab(
+              text: localization.eInvoice,
+            ),
         ],
       ),
       body: Form(
@@ -146,6 +158,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
                   ),
                   RecurringInvoiceEditNotesScreen(),
                   RecurringInvoiceEditPDFScreen(),
+                  if (showEInvoice) RecurringInvoiceEditEInvoiceScreen(),
                 ],
               ),
       ),

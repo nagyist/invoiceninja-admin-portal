@@ -360,23 +360,43 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           value: widget.contact!.customValue4,
           onSavePressed: (_) => _onDoneContactPressed(),
         ),
-        if (widget.isDialog)
+        if (widget.isDialog) ...[
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: SwitchListTile(
+              activeThumbColor: Theme.of(context).colorScheme.secondary,
+              title: Text(localization.addToInvoices),
+              value: _contact!.sendEmail,
+              onChanged: (value) {
+                setState(() =>
+                    _contact = _contact!.rebuild((b) => b..sendEmail = value));
+
+                viewModel.onChangedContact(
+                  _contact!.rebuild((b) => b..sendEmail = value),
+                  widget.index,
+                );
+              },
+            ),
+          ),
+          if (state.isProPlan)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: SwitchListTile(
                 activeThumbColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.addToInvoices),
-                value: _contact!.sendEmail,
+                title: Text(localization.ccOnly),
+                value: _contact!.ccOnly,
                 onChanged: (value) {
-                  setState(() => _contact =
-                      _contact!.rebuild((b) => b..sendEmail = value));
+                  setState(() =>
+                      _contact = _contact!.rebuild((b) => b..ccOnly = value));
 
                   viewModel.onChangedContact(
-                    _contact!.rebuild((b) => b..sendEmail = value),
+                    _contact!.rebuild((b) => b..ccOnly = value),
                     widget.index,
                   );
-                }),
-          ),
+                },
+              ),
+            ),
+        ],
       ],
     );
 
