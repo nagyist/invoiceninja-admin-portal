@@ -1093,6 +1093,7 @@ const Map<int, String> kModules = {
 const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
 
 const List<String> kLanguages = [
+  'af_ZA',
   'ar',
   'bg',
   'ca',
@@ -1102,7 +1103,6 @@ const List<String> kLanguages = [
   'el',
   'en',
   'en_GB',
-  'en_AU',
   'es',
   'es_ES',
   'et',
@@ -1112,9 +1112,12 @@ const List<String> kLanguages = [
   'fr_CA',
   'fr_CH',
   'hu',
+  'he',
   'hr',
+  'id_ID',
   'it',
   'ja',
+  'km_KH',
   'lo_LA',
   'lt',
   'lv_LV',
