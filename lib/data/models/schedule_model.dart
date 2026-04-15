@@ -82,8 +82,7 @@ abstract class ScheduleEntity extends Object
   static const TEMPLATE_EMAIL_STATEMENT = 'email_statement';
   static const TEMPLATE_EMAIL_RECORD = 'email_record';
   static const TEMPLATE_EMAIL_REPORT = 'email_report';
-  static const TEMPLATE_INVOICE_OUTSTANDING_TASKS =
-      'invoice_outstanding_tasks';
+  static const TEMPLATE_INVOICE_OUTSTANDING_TASKS = 'invoice_outstanding_tasks';
   static const TEMPLATE_PAYMENT_SCHEDULE = 'payment_schedule';
 
   static const TEMPLATES = [
@@ -229,16 +228,14 @@ abstract class ScheduleParameters
       reportName: action == ScheduleEntity.TEMPLATE_EMAIL_REPORT
           ? ExportType.invoices.name
           : null,
-      autoSend:
-          action == ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS
-              ? false
-              : null,
+      autoSend: action == ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS
+          ? false
+          : null,
       includeProjectTasks:
           action == ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS
               ? false
               : null,
-      invoiceId:
-          action == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE ? '' : null,
+      invoiceId: action == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE ? '' : null,
       autoBill:
           action == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE ? false : null,
     );

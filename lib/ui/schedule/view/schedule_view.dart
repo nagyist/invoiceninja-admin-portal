@@ -118,10 +118,9 @@ class _ScheduleViewState extends State<ScheduleView> {
                           .displayName
                       : '${parameters.clients!.length} ${localization.clients}',
               localization.dateRange: localization.lookup(parameters.dateRange),
-              localization.autoSend:
-                  parameters.autoSend == true
-                      ? localization.yes
-                      : localization.no,
+              localization.autoSend: parameters.autoSend == true
+                  ? localization.yes
+                  : localization.no,
               localization.includeProjectTasks:
                   parameters.includeProjectTasks == true
                       ? localization.yes
@@ -141,10 +140,9 @@ class _ScheduleViewState extends State<ScheduleView> {
                       .get(parameters.invoiceId!)
                       .listDisplayName
                   : '',
-              localization.autoBill:
-                  parameters.autoBill == true
-                      ? localization.yes
-                      : localization.no,
+              localization.autoBill: parameters.autoBill == true
+                  ? localization.yes
+                  : localization.no,
             })
         ],
       ),

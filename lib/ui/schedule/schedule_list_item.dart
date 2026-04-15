@@ -92,8 +92,7 @@ class ScheduleListItem extends StatelessWidget {
       }
       subtitle +=
           ' • ' + localization.lookup(kFrequencies[schedule.frequencyId]);
-    } else if (schedule.template ==
-        ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE) {
+    } else if (schedule.template == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE) {
       if (schedule.parameters.invoiceId != null &&
           schedule.parameters.invoiceId!.isNotEmpty) {
         title += ': ' +
