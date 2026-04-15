@@ -45,11 +45,11 @@ packages:
     dependency: "direct overridden"
     description:
       path: attributed_text
-      ref: stable
-      resolved-ref: a1526c5576761a76cbfbfcf27f54515c60d30ce3
+      ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
+      resolved-ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
       url: "https://github.com/superlistapp/super_editor"
     source: git
-    version: "0.3.2"
+    version: "0.4.5"
   barcode:
     dependency: transitive
     description:
@@ -504,10 +504,10 @@ packages:
     dependency: "direct main"
     description:
       name: follow_the_leader
-      sha256: "798baf5211ca2461c8462d4c8e94f57bf989758f8204056d607eb9a20f1cf794"
+      sha256: "2e4c4ebe6b3f1942b2385904b118ba8ba117fae0b30c8c453be0b64a271dd07a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.4+8"
+    version: "0.5.2"
   frontend_server_client:
     dependency: transitive
     description:
@@ -1045,10 +1045,10 @@ packages:
     dependency: "direct main"
     description:
       name: overlord
-      sha256: "576256bc9ce3fb0ae3042bbb26eed67bdb26a5045dd7e3c851aae65b0bbab2f5"
+      sha256: "532f5685ac09ee805d97ce89794a4eeda41672c32955b4a835bdfce93e720a05"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3+5"
+    version: "0.4.2"
   package_config:
     dependency: transitive
     description:
@@ -1604,37 +1604,37 @@ packages:
     dependency: "direct main"
     description:
       path: super_editor
-      ref: stable
-      resolved-ref: a1526c5576761a76cbfbfcf27f54515c60d30ce3
+      ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
+      resolved-ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
       url: "https://github.com/superlistapp/super_editor"
     source: git
-    version: "0.3.0-dev.10"
+    version: "0.3.0-dev.39"
   super_editor_markdown:
     dependency: "direct main"
     description:
       path: super_editor_markdown
-      ref: stable
-      resolved-ref: a1526c5576761a76cbfbfcf27f54515c60d30ce3
+      ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
+      resolved-ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
       url: "https://github.com/superlistapp/super_editor"
     source: git
-    version: "0.1.5"
+    version: "0.2.0"
   super_keyboard:
     dependency: transitive
     description:
       name: super_keyboard
-      sha256: "1a0a32dd799118554fb801822ae2eed7669fbbf7c754d94d240ec3e8ee7dbd67"
+      sha256: "47dfacfd617f7b704c3b9cc786930ced3b6e8698cb5ffd3b4a0cb705d42f679a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.2"
+    version: "0.3.1"
   super_text_layout:
     dependency: "direct overridden"
     description:
       path: super_text_layout
-      ref: stable
-      resolved-ref: a1526c5576761a76cbfbfcf27f54515c60d30ce3
+      ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
+      resolved-ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
       url: "https://github.com/superlistapp/super_editor"
     source: git
-    version: "0.1.15"
+    version: "0.1.19"
   sync_http:
     dependency: transitive
     description:
