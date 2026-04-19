@@ -243,7 +243,7 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
     final settings = viewModel.settings;
     final settingsUIState = state.settingsUIState;
     final isPeppol = settings.eInvoiceType == kEInvoiceTypePEPPOL;
-    final hasPeppolId = company.legalEntityId.isNotEmpty;
+    final hasPeppolId = company.legalEntityId != 0;
 
     return EditScaffold(
       title: localization.eInvoiceSettings,
