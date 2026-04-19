@@ -118,12 +118,12 @@ class _InvoiceEInvoiceFormState extends State<_InvoiceEInvoiceForm> {
       EInvoiceInvoiceEntity eInvoiceInvoice, EInvoiceEntity eInvoice) {
     final invoice = widget.viewModel.invoice!;
     final updatedInvoice = eInvoiceInvoice.rebuild((b) => b
-      ..invoicePeriod.replace(
-          BuiltList<EInvoiceInvoicePeriodEntity>([updatedPeriod])));
+      ..invoicePeriod
+          .replace(BuiltList<EInvoiceInvoicePeriodEntity>([updatedPeriod])));
     final updatedEInvoice =
         eInvoice.rebuild((b) => b..invoice.replace(updatedInvoice));
-    widget.viewModel
-        .onChanged!(invoice.rebuild((b) => b..eInvoice.replace(updatedEInvoice)));
+    widget.viewModel.onChanged!(
+        invoice.rebuild((b) => b..eInvoice.replace(updatedEInvoice)));
   }
 
   @override
@@ -195,8 +195,8 @@ class _InvoiceEInvoiceFormState extends State<_InvoiceEInvoiceForm> {
                 final updatedInvoice = eInvoiceInvoice.rebuild((b) => b
                   ..delivery.replace(
                       BuiltList<EInvoiceDeliveryEntity>([updatedDelivery])));
-                final updatedEInvoice = eInvoice.rebuild(
-                    (b) => b..invoice.replace(updatedInvoice));
+                final updatedEInvoice =
+                    eInvoice.rebuild((b) => b..invoice.replace(updatedInvoice));
                 widget.viewModel.onChanged!(invoice
                     .rebuild((b) => b..eInvoice.replace(updatedEInvoice)));
               },
@@ -227,8 +227,8 @@ class _CreditEInvoiceForm extends StatelessWidget {
     final billingRef = creditNote.billingReference.isNotEmpty
         ? creditNote.billingReference.first
         : EInvoiceBillingReferenceEntity();
-    final docRef =
-        billingRef.invoiceDocumentReference ?? EInvoiceDocumentReferenceEntity();
+    final docRef = billingRef.invoiceDocumentReference ??
+        EInvoiceDocumentReferenceEntity();
 
     String? invoiceId;
     if ((docRef.id ?? '').isNotEmpty) {
@@ -263,13 +263,13 @@ class _CreditEInvoiceForm extends StatelessWidget {
               entityList: invoiceIds,
               onSelected: (selectedInvoice) {
                 final inv = selectedInvoice as InvoiceEntity?;
-                final updatedDocRef = EInvoiceDocumentReferenceEntity().rebuild(
-                    (b) => b
+                final updatedDocRef =
+                    EInvoiceDocumentReferenceEntity().rebuild((b) => b
                       ..id = inv?.number ?? ''
                       ..issueDate = inv?.date ?? '');
-                final updatedBillingRef =
-                    EInvoiceBillingReferenceEntity().rebuild(
-                        (b) => b..invoiceDocumentReference.replace(updatedDocRef));
+                final updatedBillingRef = EInvoiceBillingReferenceEntity()
+                    .rebuild((b) =>
+                        b..invoiceDocumentReference.replace(updatedDocRef));
                 final updatedCreditNote = EInvoiceCreditNoteEntity().rebuild(
                     (b) => b
                       ..billingReference.replace(
@@ -313,8 +313,7 @@ class _EInvoiceSendCard extends StatelessWidget {
         AppButton(
           label: localization.send.toUpperCase(),
           onPressed: () {
-            final url =
-                state.credentials.url + '/einvoice/peppol/send';
+            final url = state.credentials.url + '/einvoice/peppol/send';
             store.dispatch(StartSaving());
             WebClient()
                 .post(

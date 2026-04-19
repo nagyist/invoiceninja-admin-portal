@@ -51,7 +51,7 @@ Future<List<MultipartFile>?> pickFiles({
     } else if (Platform.isAndroid) {
       final androidInfo = await DeviceInfoPlugin().androidInfo;
       if (androidInfo.version.sdkInt >= 33) {
-        status = await Permission.photos.request();
+        status = PermissionStatus.granted;
       } else {
         status = await Permission.storage.request();
       }

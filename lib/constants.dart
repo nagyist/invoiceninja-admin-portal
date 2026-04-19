@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.187';
+const String kClientVersion = '5.0.189';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -487,7 +487,17 @@ const kPaymentMeansFormElements = <String, List<String>>{
 };
 
 const kPeppolCountries = [
-  '40', '56', '208', '276', '352', '372', '442', '528', '578', '752', '826',
+  '40',
+  '56',
+  '208',
+  '276',
+  '352',
+  '372',
+  '442',
+  '528',
+  '578',
+  '752',
+  '826',
 ];
 
 const String kCountryUnitedStates = '840';

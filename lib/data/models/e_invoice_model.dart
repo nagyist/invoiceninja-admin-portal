@@ -100,12 +100,12 @@ abstract class EInvoiceEntity
   @BuiltValueField(wireName: 'CreditNote')
   EInvoiceCreditNoteEntity? get creditNote;
 
-  static Serializer<EInvoiceEntity> get serializer => _$eInvoiceEntitySerializer;
+  static Serializer<EInvoiceEntity> get serializer =>
+      _$eInvoiceEntitySerializer;
 }
 
 abstract class EInvoiceInvoiceEntity
-    implements
-        Built<EInvoiceInvoiceEntity, EInvoiceInvoiceEntityBuilder> {
+    implements Built<EInvoiceInvoiceEntity, EInvoiceInvoiceEntityBuilder> {
   factory EInvoiceInvoiceEntity() {
     return _$EInvoiceInvoiceEntity._(
       invoicePeriod: BuiltList<EInvoiceInvoicePeriodEntity>(),
@@ -135,8 +135,7 @@ abstract class EInvoiceInvoiceEntity
 
 abstract class EInvoiceInvoicePeriodEntity
     implements
-        Built<EInvoiceInvoicePeriodEntity,
-            EInvoiceInvoicePeriodEntityBuilder> {
+        Built<EInvoiceInvoicePeriodEntity, EInvoiceInvoicePeriodEntityBuilder> {
   factory EInvoiceInvoicePeriodEntity() {
     return _$EInvoiceInvoicePeriodEntity._();
   }
@@ -161,8 +160,7 @@ abstract class EInvoiceInvoicePeriodEntity
 }
 
 abstract class EInvoiceDeliveryEntity
-    implements
-        Built<EInvoiceDeliveryEntity, EInvoiceDeliveryEntityBuilder> {
+    implements Built<EInvoiceDeliveryEntity, EInvoiceDeliveryEntityBuilder> {
   factory EInvoiceDeliveryEntity() {
     return _$EInvoiceDeliveryEntity._();
   }
@@ -182,8 +180,7 @@ abstract class EInvoiceDeliveryEntity
 
 abstract class EInvoicePaymentMeansEntity
     implements
-        Built<EInvoicePaymentMeansEntity,
-            EInvoicePaymentMeansEntityBuilder> {
+        Built<EInvoicePaymentMeansEntity, EInvoicePaymentMeansEntityBuilder> {
   factory EInvoicePaymentMeansEntity() {
     return _$EInvoicePaymentMeansEntity._(
       paymentMeansCode: null,

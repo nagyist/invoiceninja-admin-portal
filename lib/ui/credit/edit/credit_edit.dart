@@ -46,8 +46,8 @@ class _CreditEditState extends State<CreditEdit>
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice!;
     final state = viewModel.state!;
-    final showEInvoice = invoice.isOld &&
-        state.company.settings.enableEInvoice == true;
+    final showEInvoice =
+        invoice.isOld && state.company.settings.enableEInvoice == true;
 
     final index =
         viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
@@ -95,8 +95,8 @@ class _CreditEditState extends State<CreditEdit>
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
     final client = state.clientState.get(invoice.clientId);
-    final showEInvoice = invoice.isOld &&
-        state.company.settings.enableEInvoice == true;
+    final showEInvoice =
+        invoice.isOld && state.company.settings.enableEInvoice == true;
 
     return EditScaffold(
       isFullscreen: isFullscreen,

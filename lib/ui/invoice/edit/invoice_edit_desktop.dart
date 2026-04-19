@@ -126,8 +126,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         invoice.isCredit ||
         invoice.isPurchaseOrder;
 
-    final showEInvoice = invoice.isOld &&
-        company.settings.enableEInvoice == true;
+    final showEInvoice =
+        invoice.isOld && company.settings.enableEInvoice == true;
 
     _focusNode = FocusScopeNode();
     _optionTabController = TabController(
@@ -283,12 +283,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
               entityList: invoiceIds,
               onSelected: (selectedInvoice) {
                 final inv = selectedInvoice as InvoiceEntity?;
-                final updatedDocRef = EInvoiceDocumentReferenceEntity().rebuild(
-                    (b) => b
+                final updatedDocRef =
+                    EInvoiceDocumentReferenceEntity().rebuild((b) => b
                       ..id = inv?.number ?? ''
                       ..issueDate = inv?.date ?? '');
-                final updatedBillingRef =
-                    EInvoiceBillingReferenceEntity().rebuild((b) =>
+                final updatedBillingRef = EInvoiceBillingReferenceEntity()
+                    .rebuild((b) =>
                         b..invoiceDocumentReference.replace(updatedDocRef));
                 final updatedCreditNote = EInvoiceCreditNoteEntity().rebuild(
                     (b) => b
@@ -361,9 +361,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             keyboardType: TextInputType.multiline,
             maxLines: 2,
             onChanged: (value) {
-              final end = description.contains('|')
-                  ? description.split('|').last
-                  : '';
+              final end =
+                  description.contains('|') ? description.split('|').last : '';
               final updatedPeriod =
                   period.rebuild((b) => b..description = '$value|$end');
               updatePeriod(updatedPeriod);
@@ -375,9 +374,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             keyboardType: TextInputType.multiline,
             maxLines: 2,
             onChanged: (value) {
-              final start = description.contains('|')
-                  ? description.split('|').first
-                  : '';
+              final start =
+                  description.contains('|') ? description.split('|').first : '';
               final updatedPeriod =
                   period.rebuild((b) => b..description = '$start|$value');
               updatePeriod(updatedPeriod);
@@ -436,8 +434,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
               child: AppButton(
                 label: localization.send.toUpperCase(),
                 onPressed: () {
-                  final url =
-                      state.credentials.url + '/einvoice/peppol/send';
+                  final url = state.credentials.url + '/einvoice/peppol/send';
                   store.dispatch(StartSaving());
                   WebClient()
                       .post(
@@ -481,8 +478,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final client = state.clientState.get(invoice.clientId);
     final vendor = state.vendorState.get(invoice.vendorId);
     final entityType = invoice.entityType;
-    final showEInvoice = invoice.isOld &&
-        company.settings.enableEInvoice == true;
+    final showEInvoice =
+        invoice.isOld && company.settings.enableEInvoice == true;
     final originalInvoice =
         (state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity?) ??
             invoice;
@@ -1010,8 +1007,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                             ? ' (${invoice.documents.length})'
                                             : '')),
                               if (showEInvoice)
-                                Tab(
-                                    text: localization.eInvoice),
+                                Tab(text: localization.eInvoice),
                             ],
                           ),
                           SizedBox(

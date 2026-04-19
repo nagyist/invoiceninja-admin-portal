@@ -550,8 +550,8 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         label: localization.autoSend,
                         value: parameters.autoSend,
                         onChanged: (value) {
-                          viewModel.onChanged(schedule.rebuild(
-                              (b) => b..parameters.autoSend = value));
+                          viewModel.onChanged(schedule
+                              .rebuild((b) => b..parameters.autoSend = value));
                         }),
                     BoolDropdownButton(
                         label: localization.includeProjectTasks,

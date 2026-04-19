@@ -243,7 +243,7 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
     final settings = viewModel.settings;
     final settingsUIState = state.settingsUIState;
     final isPeppol = settings.eInvoiceType == kEInvoiceTypePEPPOL;
-    final hasPeppolId = company.legalEntityId.isNotEmpty;
+    final hasPeppolId = company.legalEntityId != 0;
 
     return EditScaffold(
       title: localization.eInvoiceSettings,
@@ -356,9 +356,9 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                                     style: TextStyle(color: Colors.red),
                                   ),
                                   onPressed: () {
-                                    viewModel.onCompanyChanged(
-                                        company.rebuild((b) => b
-                                          ..hasEInvoiceCertificate = false));
+                                    viewModel.onCompanyChanged(company.rebuild(
+                                        (b) =>
+                                            b..hasEInvoiceCertificate = false));
                                     viewModel.onSavePressed(context);
                                   },
                                 )
@@ -586,9 +586,8 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                                 child: ListTile(
                                   title: Text(
                                     options.elementAt(index),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                   onTap: () =>
                                       onSelected(options.elementAt(index)),
@@ -698,9 +697,7 @@ class _PeppolPreferencesState extends State<_PeppolPreferences> {
   void _loadQuota() {
     final state = widget.store.state;
     final url = state.credentials.url + '/einvoice/quota';
-    WebClient()
-        .get(url, state.credentials.token)
-        .then((response) {
+    WebClient().get(url, state.credentials.token).then((response) {
       if (mounted) {
         setState(() {
           _quota = (response['quota'] ?? '').toString();
@@ -795,9 +792,7 @@ class _PeppolPreferencesState extends State<_PeppolPreferences> {
                 final url =
                     state.credentials.url + '/einvoice/peppol/disconnect';
                 widget.store.dispatch(StartSaving());
-                WebClient()
-                    .post(url, state.credentials.token)
-                    .then((_) {
+                WebClient().post(url, state.credentials.token).then((_) {
                   widget.store.dispatch(StopSaving());
                   widget.store.dispatch(RefreshData());
                 }).catchError((error) {
@@ -1100,9 +1095,7 @@ class _EUTaxDetailsState extends State<_EUTaxDetails> {
                 children: [
                   AppDropdownButton<String>(
                     labelText: widget.localization.country,
-                    value: selectedCountryId.isEmpty
-                        ? null
-                        : selectedCountryId,
+                    value: selectedCountryId.isEmpty ? null : selectedCountryId,
                     showBlank: true,
                     onChanged: (dynamic value) {
                       setDialogState(() => selectedCountryId = value ?? '');

@@ -49,8 +49,8 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice!;
     final state = viewModel.state!;
-    final showEInvoice = invoice.isOld &&
-        state.company.settings.enableEInvoice == true;
+    final showEInvoice =
+        invoice.isOld && state.company.settings.enableEInvoice == true;
 
     final index =
         viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
@@ -110,8 +110,8 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final client = state.clientState.get(invoice.clientId);
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
-    final showEInvoice = invoice.isOld &&
-        state.company.settings.enableEInvoice == true;
+    final showEInvoice =
+        invoice.isOld && state.company.settings.enableEInvoice == true;
 
     return EditScaffold(
       isFullscreen: isFullscreen,

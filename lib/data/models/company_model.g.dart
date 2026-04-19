@@ -418,7 +418,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           specifiedType: const FullType(String)),
       'legal_entity_id',
       serializers.serialize(object.legalEntityId,
-          specifiedType: const FullType(String)),
+          specifiedType: const FullType(int)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -1014,7 +1014,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'legal_entity_id':
           result.legalEntityId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -1934,7 +1934,7 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String eInvoiceCertificatePassphrase;
   @override
-  final String legalEntityId;
+  final int legalEntityId;
   @override
   final bool? isChanged;
   @override
@@ -3087,9 +3087,9 @@ class CompanyEntityBuilder
   set eInvoiceCertificatePassphrase(String? eInvoiceCertificatePassphrase) =>
       _$this._eInvoiceCertificatePassphrase = eInvoiceCertificatePassphrase;
 
-  String? _legalEntityId;
-  String? get legalEntityId => _$this._legalEntityId;
-  set legalEntityId(String? legalEntityId) =>
+  int? _legalEntityId;
+  int? get legalEntityId => _$this._legalEntityId;
+  set legalEntityId(int? legalEntityId) =>
       _$this._legalEntityId = legalEntityId;
 
   bool? _isChanged;
